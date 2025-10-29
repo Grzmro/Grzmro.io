@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home - Osobiste portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
+  <meta name="color-scheme" content="dark light">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span>Osobiste portfolio</span></div>
+      <nav aria-label="Nawigacja">
+        <ul>
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="gallery.html" data-page="gallery">Galeria</a></li>
+          <li><a href="contact.html" data-page="contact">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="controls">
+        <span id="clock">--:--</span>
+        <button class="theme-toggle" id="themeBtn" type="button" aria-pressed="false">Zmień motyw</button>
+      </div>
+    </div>
+  </header>
+  <main>
+<section class="hero card">
+  <div>
+    <h1>Cześć! Jestem Grzesiek - jestem sudentem UMiSI</h1>
+    <p>Moim ulubionym przedmiotem jest Wprowadzenie do aplikacji Internetowych. 
+      (Zdjęcie jest trochę krzywo ale to dlatego że krzywo zrobiłem screenshota)
+    </p>
+  </div>
+  <img src="assets/images/WdAI.png" alt="WdAI">
+</section>
+
+<section class="grid-3">
+  <article class="card feature">
+    <h3>Studia</h3>
+    <p>Jestem absolwentem kierunku Matematyka na AGH i obecnie studiuję na kierunku Informatyka - Artificial Intelligence & ML też na AGH.
+    </p>
+  </article>
+  <article class="card feature">
+    <h3>Osiągnięcia</h3>
+    <p>Członek teamu który przeszedł do fazy finałowej podczas HackYeah (największego stacjonarnego hackatonu w Europie).</p>
+  </article>
+  <article class="card feature">
+    <h3>Hobby</h3>
+    <p>W wolnej chwili lubię grać w piłkę nożna, biegać i ogólnie aktywnie spędzać czas.</p>
+  </article>
+</section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Grzegorz Mróz - Wszystkie prawa zastrzeżone.</div>
+      <div>Made with semantyczny HTML, CSS Grid/Flexbox i trochę JS</div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galeria — Osobiste portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="color-scheme" content="dark light">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span>Osobiste portfolio</span></div>
+      <nav aria-label="Główna nawigacja">
+        <ul>
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="gallery.html" data-page="gallery">Galeria</a></li>
+          <li><a href="contact.html" data-page="contact">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="controls">
+        <span id="clock">--:--</span>
+        <button class="theme-toggle" id="themeBtn" type="button" aria-pressed="false">Zmień Motyw</button>
+      </div>
+    </div>
+  </header>
+  <main>
+<section class="card">
+  <h2>Galeria</h2>
+  <p class="hint">Obrazy</p>
+  <div class="gallery" role="list">
+    <img src="assets/images/Pazdan.png" alt="Pazdan" role="listitem">
+    <img src="assets/images/Bieganie.png" alt="Bieganie" role="listitem">
+    <img src="assets/images/hakaton.png" alt="HackYeah" role="listitem">
+    <img src="assets/images/Szczesny.png" alt="Szczesny" role="listitem">
+    <img src="assets/images/bieganie-po-asfalcie.png" alt="bieganie-po-asfalcie" role="listitem">
+  </div>
+</section>
+
+<section class="card video-wrap">
+  <h3>Przykładowy film</h3>
+  <video controls preload="metadata" poster="assets/images/Szczesny.png">
+    <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+  </video>
+</section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Grzegorz Mróz - Wszystkie prawa zastrzeżone.</div>
+      <div>Made with semantyczny HTML, CSS Grid/Flexbox i trochę JS </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

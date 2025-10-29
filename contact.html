@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kontakt — Osobiste portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <meta name="color-scheme" content="dark light">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span>Osobiste portfolio</span></div>
+      <nav aria-label="Główna nawigacja">
+        <ul>
+          <li><a href="index.html" data-page="home">Home</a></li>
+          <li><a href="gallery.html" data-page="gallery">Galeria</a></li>
+          <li><a href="contact.html" data-page="contact">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="controls">
+        <span id="clock">--:--</span>
+        <button class="theme-toggle" id="themeBtn" type="button" aria-pressed="false">Zmień Motyw</button>
+      </div>
+    </div>
+  </header>
+  <main>
+<section class="card">
+  <h2>Kontakt</h2>
+  <p class="hint">Wypełnij formularz.</p>
+
+  <div id="success" class="success" role="status" aria-live="polite">Wiadomość została wysłana.</div>
+
+  <form id="contactForm" class="contact" novalidate>
+    <div>
+      <label for="email">E-Mail</label>
+      <input id="email" name="email" type="text" placeholder="np. jan.kowalski@example.com" required>
+      <div class="error" id="emailError" hidden>Podaj poprawny adres e-mail.</div>
+    </div>
+
+    <div>
+      <label for="topic">Temat wiadomości</label>
+      <select id="topic" name="topic" required>
+        <option value="pytanie">Pytanie</option>
+        <option value="wspolpraca">Współpraca</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="message">Wiadomość</label>
+      <textarea id="message" name="message" rows="6" placeholder="W czym mogę pomóc?" required></textarea>
+      <div class="error" id="messageError" hidden>Uzupełnij wiadomość</div>
+    </div>
+
+    <input type="submit" value="Wyślij">
+  </form>
+</section>
+  </main>
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Grzegorz Mróz - Wszystkie prawa zastrzeżone.</div>
+      <div>Made with semantyczny HTML, CSS Grid/Flexbox i trochę JS </div>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
