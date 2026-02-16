@@ -1,64 +1,471 @@
 <!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Home - Osobiste portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
-  <meta name="color-scheme" content="dark light">
-</head>
-<body>
-  <header>
-    <div class="navbar">
-      <div class="brand"><span>Osobiste portfolio</span></div>
-      <nav aria-label="Nawigacja">
-        <ul>
-          <li><a href="index.html" data-page="home">Home</a></li>
-          <li><a href="gallery.html" data-page="gallery">Galeria</a></li>
-          <li><a href="contact.html" data-page="contact">Kontakt</a></li>
-        </ul>
-      </nav>
-      <div class="controls">
-        <span id="clock">--:--</span>
-        <button class="theme-toggle" id="themeBtn" type="button" aria-pressed="false">Zmień motyw</button>
-      </div>
-    </div>
-  </header>
-  <main>
-<section class="hero card">
-  <div>
-    <h1>Cześć! Jestem Grzesiek - jestem sudentem UMiSI</h1>
-    <p>Moim ulubionym przedmiotem jest Wprowadzenie do aplikacji Internetowych. 
-      (Zdjęcie jest trochę krzywo ale to dlatego że krzywo zrobiłem screenshota)
-    </p>
-  </div>
-  <img src="assets/images/WdAI.png" alt="WdAI">
-</section>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Grzegorz Mróz - Machine Learning Engineer & Computer Science Student"
+    />
+    <title>Grzegorz Mróz | ML Engineer</title>
 
-<section class="grid-3">
-  <article class="card feature">
-    <h3>Studia</h3>
-    <p>Jestem absolwentem kierunku Matematyka na AGH i obecnie studiuję na kierunku Informatyka - Artificial Intelligence & ML też na AGH.
-    </p>
-  </article>
-  <article class="card feature">
-    <h3>Osiągnięcia</h3>
-    <p>Członek teamu który przeszedł do fazy finałowej podczas HackYeah (największego stacjonarnego hackatonu w Europie).</p>
-  </article>
-  <article class="card feature">
-    <h3>Hobby</h3>
-    <p>W wolnej chwili lubię grać w piłkę nożna, biegać i ogólnie aktywnie spędzać czas.</p>
-  </article>
-</section>
-  </main>
-  <footer>
-    <div class="footer-inner">
-      <div>© <span id="year"></span> Grzegorz Mróz - Wszystkie prawa zastrzeżone.</div>
-      <div>Made with semantyczny HTML, CSS Grid/Flexbox i trochę JS</div>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="logo">GM.</a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#education">Education</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact" class="btn-contact">Contact</a>
+        </div>
+        <div class="hamburger">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+      <a href="#about" class="mobile-link">About</a>
+      <a href="#education" class="mobile-link">Education</a>
+      <a href="#skills" class="mobile-link">Skills</a>
+      <a href="#projects" class="mobile-link">Projects</a>
+      <a href="#experience" class="mobile-link">Experience</a>
+      <a href="#contact" class="mobile-link">Contact</a>
     </div>
-  </footer>
-  <script src="script.js"></script>
-</body>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <span class="greeting">Hello, I'm</span>
+          <h1 class="glitch-text" data-text="Grzegorz Mróz">Grzegorz Mróz</h1>
+          <h2 class="subtitle">
+            Machine Learning Engineer & <br />Computer Science Master’s Student
+          </h2>
+          <p class="hero-description">
+            Leveraging advanced mathematics and deep learning to build robust
+            predictive models. Passionate about solving complex real-world
+            problems through data.
+          </p>
+
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">View My Work</a>
+            <a href="#contact" class="btn btn-outline">Contact Me</a>
+          </div>
+
+          <div class="social-links">
+            <a
+              href="https://github.com/Grzmro"
+              target="_blank"
+              aria-label="GitHub"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a
+              href="https://www.linkedin.com/in/grzegorz-mr%C3%B3z-b63266239"
+              target="_blank"
+              aria-label="LinkedIn"
+              ><i class="fab fa-linkedin"></i
+            ></a>
+            <a href="mailto:grzegorzmroz555@gmail.com" aria-label="Email"
+              ><i class="fas fa-envelope"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="code-block-wrapper">
+            <div class="code-block-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <pre><code class="language-python">
+class MachineLearningEngineer:
+    def __init__(self):
+        self.name = "Grzegorz Mróz"
+        self.role = "ML Engineer"
+        self.location = "Kraków, Poland"
+        
+    def get_skills(self):
+        return [
+            "PyTorch", "TensorFlow",
+            "Calculus", "Probability Theory",
+            "Python", "SQL"
+        ]
+        
+    def mission(self):
+        return "Building robust AI models"
+
+me = MachineLearningEngineer()
+print(me.mission())
+                    </code></pre>
+          </div>
+        </div>
+      </div>
+
+      <a href="#about" class="scroll-down">
+        <span class="mouse">
+          <span class="wheel"></span>
+        </span>
+        <span class="arrow"></span>
+      </a>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+      <div class="container">
+        <h2 class="section-title">Personal Profile</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p class="lead">
+              I am a Computer Science Master’s student and Machine Learning
+              Engineer with a strong mathematical background.
+            </p>
+            <p>
+              My academic journey began with a Bachelor's in Mathematics, giving
+              me a rigorous foundation in Probability Theory, Calculus, and
+              Linear Algebra—essential tools for deeply understanding machine
+              learning algorithms.
+            </p>
+            <p>
+              I experienced in building data processing pipelines (ETL) and
+              conducting statistical analysis using Python and SQL. Currently, I
+              am eager to apply deep learning and quantitative methods to solve
+              complex real-world problems.
+            </p>
+          </div>
+          <div class="about-stats">
+            <div class="stat-card">
+              <i class="fas fa-graduation-cap"></i>
+              <h3>M.Sc. Student</h3>
+              <p>AGH University</p>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-brain"></i>
+              <h3>Math Background</h3>
+              <p>Calculus & Probability</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="section bg-light">
+      <div class="container">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+          <!-- Master's -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">Oct 2025 – Present</div>
+            <div class="timeline-content">
+              <h3>Master of Science in Computer Science</h3>
+              <h4>AGH University of Krakow</h4>
+              <p class="specialization">Machine Learning and AI</p>
+              <p class="timeline-desc">
+                <strong>Core Modules:</strong> Deep Learning, Advanced
+                Algorithms, NLP, Database Systems, UNIX.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bachelor's -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">Oct 2022 – Jul 2025</div>
+            <div class="timeline-content">
+              <h3>Bachelor of Science in Mathematics</h3>
+              <h4>AGH University of Krakow</h4>
+              <p class="timeline-desc">
+                <strong>Thesis:</strong> Fourier method of separation of
+                variables for second-order partial differential equations.
+              </p>
+              <p class="timeline-desc">
+                <strong>Relevance to ML:</strong> Strong foundation in Calculus,
+                Linear Algebra, Probability Theory.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section">
+      <div class="container">
+        <h2 class="section-title">Technical Skills</h2>
+
+        <div class="skills-grid">
+          <!-- ML & AI -->
+          <div class="skill-category">
+            <h3><i class="fas fa-robot"></i> Machine Learning & AI</h3>
+            <div class="skill-tags">
+              <span>PyTorch</span>
+              <span>Keras</span>
+              <span>scikit-learn</span>
+              <span>TensorFlow</span>
+              <span>Prompt Engineering</span>
+            </div>
+          </div>
+
+          <!-- Data Science -->
+          <div class="skill-category">
+            <h3><i class="fas fa-chart-bar"></i> Data Science</h3>
+            <div class="skill-tags">
+              <span>Python (pandas, NumPy)</span>
+              <span>R</span>
+              <span>Matplotlib</span>
+              <span>Seaborn</span>
+              <span>SQL</span>
+              <span>Excel (Advanced)</span>
+            </div>
+          </div>
+
+          <!-- Mathematics -->
+          <div class="skill-category">
+            <h3>
+              <i class="fas fa-square-root-alt"></i> Mathematical Concepts
+            </h3>
+            <div class="skill-tags">
+              <span>Linear Algebra</span>
+              <span>ODEs & PDEs</span>
+              <span>Portfolio Theory</span>
+              <span>Probability Theory</span>
+              <span>Statistics</span>
+            </div>
+          </div>
+
+          <!-- Tools & Platforms -->
+          <div class="skill-category">
+            <h3><i class="fas fa-tools"></i> Tools & Platforms</h3>
+            <div class="skill-tags">
+              <span>Git/GitHub</span>
+              <span>Jupyter</span>
+              <span>Apache Airflow</span>
+              <span>Jira</span>
+              <span>Linux/UNIX</span>
+            </div>
+          </div>
+
+          <!-- Languages -->
+          <div class="skill-category">
+            <h3><i class="fas fa-language"></i> Languages</h3>
+            <div class="skill-tags">
+              <span>Polish (Native)</span>
+              <span>English (C1/Advanced)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section bg-light">
+      <div class="container">
+        <h2 class="section-title">Selected Projects</h2>
+        <div class="projects-grid">
+          <!-- Football Score Predictor -->
+          <article class="project-card">
+            <div class="project-content">
+              <div class="project-header">
+                <h3>Football Score Predictor</h3>
+                <a
+                  href="https://github.com/Grzmro/football-score-predictor"
+                  target="_blank"
+                  class="icon-link"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+              </div>
+              <p>
+                Developed Machine Learning models to forecast football match
+                outcomes using historical data. Performed advanced feature
+                engineering, such as calculating rolling averages for team form
+                and analyzing head-to-head statistics.
+              </p>
+              <div class="project-tags">
+                <span>Machine Learning</span>
+                <span>Python</span>
+                <span>Predictive Modeling</span>
+                <span>Feature Engineering</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Grzmro/football-score-predictor"
+                  target="_blank"
+                  class="btn btn-sm btn-outline"
+                  >View on GitHub <i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Darwin World -->
+          <article class="project-card">
+            <div class="project-content">
+              <div class="project-header">
+                <h3>Darwin World – Evolutionary Simulation</h3>
+                <a
+                  href="https://github.com/Grzmro/Darwin-Game"
+                  target="_blank"
+                  class="icon-link"
+                  ><i class="fas fa-external-link-alt"></i
+                ></a>
+              </div>
+              <p>
+                Developed a comprehensive ecosystem simulation using Genetic
+                Algorithms to model evolutionary processes, mutation, and animal
+                survival strategies. Implemented complex Object-Oriented
+                architecture to manage multi-agent interactions and visualized
+                real-time statistics of the population.
+              </p>
+              <div class="project-tags">
+                <span>Genetic Algorithms</span>
+                <span>OOP</span>
+                <span>Simulation</span>
+                <span>Java</span>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/Grzmro/Darwin-Game"
+                  target="_blank"
+                  class="btn btn-sm btn-outline"
+                  >View on GitHub <i class="fab fa-github"></i
+                ></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline work-timeline">
+          <!-- Data Analyst UBS -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">Aug 2025 – Feb 2026</div>
+            <div class="timeline-content">
+              <h3>Data Analyst</h3>
+              <h4>
+                UBS
+                <span class="location"
+                  ><i class="fas fa-map-marker-alt"></i> Kraków</span
+                >
+              </h4>
+              <ul class="experience-list">
+                <li>
+                  Engineered and optimized data extraction pipelines using
+                  Python and SQL (Oracle), automating manual reporting processes
+                  and improving efficiency.
+                </li>
+                <li>
+                  Analyzed large financial datasets to identify discrepancies,
+                  ensuring data integrity for critical regulatory reporting.
+                </li>
+                <li>
+                  Collaborated with engineering teams to resolve data quality
+                  incidents managed via Jira, significantly reducing resolution
+                  time for reporting errors.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Mathematics Tutor -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-date">Oct 2022 – Present</div>
+            <div class="timeline-content">
+              <h3>Mathematics Tutor</h3>
+              <h4>
+                Self-employed
+                <span class="location"
+                  ><i class="fas fa-map-marker-alt"></i> Kraków</span
+                >
+              </h4>
+              <ul class="experience-list">
+                <li>
+                  Explained complex mathematical concepts (Linear Algebra,
+                  Calculus).
+                </li>
+                <li>
+                  Developed personalized learning plans emphasizing logical
+                  reasoning and analytical problem-solving.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+      <div class="container footer-content">
+        <div class="footer-cta">
+          <h2>Let's work together!</h2>
+          <p>
+            I'm always open to discussing new projects, creative ideas or
+            opportunities to be part of your visions.
+          </p>
+          <a href="mailto:grzegorzmroz555@gmail.com" class="btn btn-primary"
+            >Say Hello</a
+          >
+        </div>
+
+        <div class="footer-social">
+          <a href="https://github.com/Grzmro" target="_blank"
+            ><i class="fab fa-github"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/grzegorz-mr%C3%B3z-b63266239"
+            target="_blank"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="mailto:grzegorzmroz555@gmail.com"
+            ><i class="fas fa-envelope"></i
+          ></a>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; <span id="year"></span> Grzegorz Mróz. All rights reserved.
+          </p>
+          <div class="footer-tech">
+            <p>791 382 577 | Kraków, Poland</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
 </html>
