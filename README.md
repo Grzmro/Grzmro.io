@@ -9,7 +9,7 @@ Welcome to my personal portfolio website! This project showcases my academic bac
 
 This is a modern, single-page portfolio designed to be clean, responsive, and visually engaging. It highlights my expertise in **Machine Learning**, **Data Science**, and **Mathematics**.
 
-**Live Demo:** [https://grzmro.github.io/](https://grzmro.github.io/)
+**Live Demo:** https://grzmro.github.io/Grzmro.io/
 
 ## Key Features
 
