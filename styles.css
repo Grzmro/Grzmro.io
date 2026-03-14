@@ -542,15 +542,12 @@ p {
 #skills-graph-container {
     position: relative;
     width: 100%;
-    max-width: 560px;
-    height: 500px;
-    border-radius: var(--border-radius);
-    border: 1px solid rgba(59, 130, 246, 0.12);
-    overflow: hidden;
-    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.4),
-        0 0 40px rgba(59, 130, 246, 0.05);
+    /* Max-width expanded to allow the graph to take up more space */
+    max-width: 800px;
+    height: 600px; /* Increased height */
+    /* Removed border, box-shadow, and overflow: hidden to make it look boundless */
+    /* Optional: keep a very subtle glow but no hard edges */
+    background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
 }
 
 #skills-graph {
