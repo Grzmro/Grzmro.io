@@ -69,27 +69,9 @@
     --font-mono: var(--mono);
 }
 
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) {
-        --paper: #16171b;
-        --raised: #1c1e23;
-        --ink: #e8e9e4;       /* 14.7:1 */
-        --ink-mid: #a4a9b0;   /* 7.6:1  */
-        --ink-faint: #7f858d; /* 4.8:1  */
-        --rule: #2c2e34;
-        --pen: #8fa8ff;       /* 7.9:1  */
-        --marker: rgba(143, 168, 255, 0.22);
-        --marker-blend: normal;
-        --plot-base: #6a7079;
-        --plot-base2: #4c525a;
-
-        /* Compatibility layer — the raw triples have no var() indirection
-           to inherit, so they are restated for the dark plate. */
-        --accent-rgb: 143, 168, 255;
-        --accent2-rgb: 229, 138, 196;
-        --accent-gradient: linear-gradient(135deg, var(--pen), #b9c8ff);
-    }
-}
+/* This design commits to light. A sheet of paper marked up in ballpoint has
+   no dark counterpart — inverted, the premise stops meaning anything and the
+   page reads as a generic dark document. Print styles below still apply. */
 
 /* ==============================================================
    2. RESET & BASE
@@ -103,7 +85,8 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    /* No smooth-scroll: on a page this long it turns a jump to a section into
+       a slow crawl. Anchors land instantly, offset clear of the running head. */
     scroll-padding-top: calc(var(--head-h) + 1.5rem);
     -webkit-text-size-adjust: 100%;
 }
@@ -188,8 +171,9 @@ mark {
     inset: 0 0 auto 0;
     height: var(--head-h);
     z-index: 40;
-    background: color-mix(in srgb, var(--paper) 88%, transparent);
-    backdrop-filter: blur(8px);
+    /* Opaque rather than blurred: a backdrop-filter on a fixed bar forces the
+       strip behind it to be re-composited on every scrolled frame. */
+    background: var(--paper);
     border-bottom: 1px solid transparent;
     transition: border-color 0.25s ease;
 }
@@ -253,7 +237,7 @@ mark {
     justify-content: center;
     max-width: 74rem;
     margin-inline: auto;
-    padding: calc(var(--head-h) + 4.5rem) 1.5rem 6rem;
+    padding: calc(var(--head-h) + 2.75rem) 1.5rem 5rem;
 }
 
 .paper > *:not(.toc) {
@@ -277,8 +261,11 @@ mark {
 /* ==============================================================
    5. TITLE BLOCK
    ============================================================== */
+/* flow-root contains the margin rail, so a tall rail grows the title block
+   instead of spilling across the rule that opens the abstract. */
 .titleblock {
-    margin-bottom: 3.5rem;
+    display: flow-root;
+    margin-bottom: 2.5rem;
 }
 
 .stamp {
@@ -287,8 +274,8 @@ mark {
     letter-spacing: 0.13em;
     text-transform: uppercase;
     color: var(--ink-faint);
-    padding-bottom: 1.4rem;
-    margin-bottom: 1.9rem;
+    padding-bottom: 1.1rem;
+    margin-bottom: 1.5rem;
     border-bottom: 1px solid var(--rule);
 }
 
@@ -366,8 +353,8 @@ mark {
    ============================================================== */
 .abstract {
     position: relative;
-    margin-bottom: 4rem;
-    padding: 1.6rem 0;
+    margin-bottom: 3rem;
+    padding: 1.4rem 0;
     border-top: 2px solid var(--ink);
     border-bottom: 1px solid var(--rule);
 }
@@ -457,7 +444,7 @@ mark {
    8. SECTIONS
    ============================================================== */
 .sec {
-    margin-bottom: 4.5rem;
+    margin-bottom: 3.25rem;
 }
 
 .sec h2 {
@@ -483,7 +470,7 @@ mark {
 }
 
 .subsec {
-    margin-top: 3rem;
+    margin-top: 2.25rem;
 }
 
 .subsec h3 {
@@ -519,13 +506,20 @@ mark {
 /* ==============================================================
    9. SIDENOTES — the signature
    ============================================================== */
-/* The section box is already measure + gap + margin-col wide, so the note
-   simply floats into the reserved tail; no negative margin is involved. */
-.note {
+/* The section box is already measure + gap + margin-col wide, so anything
+   destined for the margin simply floats into the reserved tail; no negative
+   margin is involved. Notes, figure thumbnails and result blocks all share
+   this rail, and `clear: right` keeps them stacked rather than colliding. */
+.note,
+.mfig,
+.mstats {
     float: right;
     clear: right;
     width: var(--margin-col);
-    margin: 0.35rem 0 1.2rem 2.5rem;
+    margin: 0.35rem 0 1.3rem 2.5rem;
+}
+
+.note {
     font-family: var(--hand);
     font-size: 1.16rem;
     line-height: 1.3;
@@ -534,6 +528,101 @@ mark {
     border-left: 1.5px solid color-mix(in srgb, var(--pen) 30%, transparent);
     transform: rotate(-0.6deg);
 }
+
+/* --- Margin figure: a thumbnail of the result, pasted into the margin --- */
+.mfig {
+    background: var(--raised);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.6rem 0.65rem 0.55rem;
+}
+
+.mfig svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.mfig figcaption {
+    margin-top: 0.45rem;
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    line-height: 1.45;
+    color: var(--ink-faint);
+    max-width: none;
+}
+
+.mfig figcaption b {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+/* --- Margin results: the numbers, where the eye can find them --- */
+.mstats {
+    border-top: 1px solid var(--ink);
+}
+
+/* Names what the figures below are, so a reader can't mistake a test-suite
+   count for a result the system produced. */
+.mstats-head {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0.45rem 0 0.1rem;
+}
+
+.mstats > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--rule);
+}
+
+.mstats dt {
+    font-family: var(--mono);
+    font-size: 0.63rem;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    max-width: 7.5rem;
+}
+
+.mstats dd {
+    font-family: var(--mono);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--pen);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- Thumbnail plot inside a margin figure --- */
+.mplt text {
+    font-family: var(--mono);
+    font-size: 7px;
+    fill: var(--ink-faint);
+    text-anchor: end;
+}
+
+.mplt-grid { stroke: var(--rule); }
+.mplt-axis { stroke: var(--ink-faint); }
+.mplt-b1 { fill: none; stroke: var(--plot-base); stroke-width: 1.3; }
+.mplt-b2 { fill: none; stroke: var(--plot-base2); stroke-width: 1.3; }
+
+.mplt-hero {
+    fill: none;
+    stroke: var(--plot-hero);
+    stroke-width: 2.1;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.mplt-dot { fill: var(--plot-hero); }
 
 /* ==============================================================
    10. FIGURES
@@ -1054,14 +1143,32 @@ figcaption {
         max-width: var(--measure);
     }
 
-    .note {
+    /* Nothing left to float into: the margin rail rejoins the text flow. */
+    .note,
+    .mfig,
+    .mstats {
         float: none;
         width: auto;
         max-width: var(--measure);
         margin: 1.4rem 0;
+    }
+
+    .note {
         transform: none;
         font-size: 1.2rem;
     }
+
+    /* Freed from the narrow rail, the results can sit side by side. */
+    .mstats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+        gap: 0 1.5rem;
+    }
+
+    .mstats > div { padding: 0.55rem 0; }
+    .mstats dt { max-width: none; }
+
+    .mfig { max-width: 22rem; }
 
     .fig-body svg { min-width: 26rem; }
 }

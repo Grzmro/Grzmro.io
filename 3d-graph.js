@@ -2,15 +2,12 @@
  * 3D Interactive Skills Graph — v3
  * Clean, compact Three.js graph with readable labels.
  *
- * Rendered as Figure 3 of the page, so it is drawn as ink on paper: the
- * palette below is chosen for a light stock and swapped for the dark one via
- * prefers-color-scheme. Every category colour clears 5.5:1 against its
- * background in both themes.
+ * Rendered as Figure 3 of the page, so it is drawn as ink on paper. The plate
+ * is picked from the luminance of the --paper token actually in effect, and
+ * every category colour clears 5.5:1 against its background on either plate.
  */
 
 (function () {
-    const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
     // Reads a design token from the stylesheet so the graph stays in step with
     // the page instead of carrying a second, drifting copy of the palette.
     function token(name, fallback) {
@@ -18,6 +15,18 @@
             .getPropertyValue(name)
             .trim();
         return v || fallback;
+    }
+
+    // Which plate to ink depends on the paper actually under the figure, not
+    // on the reader's OS setting: the page commits to light regardless of it,
+    // and asking the OS put a light-on-light palette on the canvas.
+    function paperIsDark() {
+        const hex = token('--paper', '#f4f5f3').replace('#', '');
+        if (hex.length < 6) return false;
+        const ch = [0, 2, 4]
+            .map(i => parseInt(hex.slice(i, i + 2), 16) / 255)
+            .map(c => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)));
+        return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2] < 0.4;
     }
 
     function waitForThree(cb) {
@@ -30,6 +39,8 @@
     function init3DGraph() {
         const container = document.getElementById('skills-graph-container');
         if (!container) return;
+
+        const darkMode = paperIsDark();
 
         // ============ SETUP ============
         const scene = new THREE.Scene();
@@ -410,7 +421,38 @@
         // ============ ANIMATION ============
         const clock = new THREE.Clock();
 
+        // The loop below writes to 29 label elements every frame. Left running
+        // while the figure is scrolled away, that competes with the browser's
+        // own scrolling work for no visible benefit, so the loop is gated on
+        // the figure actually being on screen and the tab being visible.
+        let onScreen = true;
+        let pageVisible = !document.hidden;
+        let running = false;
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                onScreen = entries[0].isIntersecting;
+                start();
+            }, { rootMargin: '150px 0px' }).observe(container);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+            pageVisible = !document.hidden;
+            start();
+        });
+
+        function start() {
+            if (running || !onScreen || !pageVisible) return;
+            running = true;
+            clock.getDelta();
+            animate();
+        }
+
         function animate() {
+            if (!onScreen || !pageVisible) {
+                running = false;
+                return;
+            }
             requestAnimationFrame(animate);
             const t = clock.getElapsedTime();
 
@@ -454,6 +496,7 @@
             renderer.render(scene, camera);
         }
 
+        running = true;
         animate();
 
         // ============ RESIZE ============

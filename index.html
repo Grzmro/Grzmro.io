@@ -12,8 +12,8 @@
       name="keywords"
       content="GenAI, LLM, RAG, world models, reinforcement learning, LangChain, Anthropic API, Machine Learning, Python, Quantitative Analyst, Grzegorz Mróz"
     />
-    <meta name="theme-color" content="#f4f5f3" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#16171b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f4f5f3" />
+    <meta name="color-scheme" content="light" />
     <title>Grzegorz Mróz — Grounded generation, world models, quantitative risk</title>
 
     <link
@@ -31,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js" defer></script>
 
-    <link rel="stylesheet" href="styles.css?v=7" />
+    <link rel="stylesheet" href="styles.css?v=8" />
   </head>
   <body>
     <a href="#s1" class="skip-link">Skip to content</a>
@@ -51,6 +51,39 @@
       <!-- ========== TITLE BLOCK ========== -->
       <header class="titleblock">
         <p class="stamp">Portfolio · Kraków, Poland · Revised August 2026</p>
+
+        <!-- Margin rail: the headline result, up where it can be seen. -->
+        <figure class="mfig">
+          <svg viewBox="0 0 200 118" role="img" aria-label="Learning curve on ALE/Pong-v5: the agent rises from the random-policy floor near -21 to -1.7 average return, while PPO and DQN baselines stay flat at the floor.">
+            <g class="mplt">
+              <line class="mplt-grid" x1="26" y1="20" x2="192" y2="20" />
+              <line class="mplt-grid" x1="26" y1="56" x2="192" y2="56" />
+              <line class="mplt-grid" x1="26" y1="92" x2="192" y2="92" />
+              <line class="mplt-axis" x1="26" y1="14" x2="26" y2="98" />
+              <line class="mplt-axis" x1="26" y1="98" x2="192" y2="98" />
+              <text class="mplt-lab" x="22" y="23">0</text>
+              <text class="mplt-lab" x="22" y="59">−10</text>
+              <text class="mplt-lab" x="22" y="95">−20</text>
+              <polyline class="mplt-b2" points="26,95 60,94 110,95 150,94 192,94" />
+              <polyline class="mplt-b1" points="26,91 70,89 120,90 160,88 192,89" />
+              <polyline class="mplt-hero" points="26,96 44,94 62,79 80,68 98,55 130,44 160,37 192,32" />
+              <circle class="mplt-dot" cx="192" cy="32" r="2.6" />
+              <text class="mplt-lab mplt-end" x="188" y="112">60k env steps</text>
+            </g>
+          </svg>
+          <figcaption>
+            <b>Fig. 1.</b> ALE/Pong-v5. The agent under test against
+            CleanRL-protocol baselines, shared budget. Full plot in
+            §<a href="#s2-2">2.2</a>.
+          </figcaption>
+        </figure>
+
+        <dl class="mstats">
+          <div><dt>Episode return</dt><dd>−1.7</dd></div>
+          <div><dt>Imagination fidelity</dt><dd>r = 0.96</dd></div>
+          <div><dt>Reward head</dt><dd>0.987</dd></div>
+          <div><dt>vs. random</dt><dd>8.5e−6</dd></div>
+        </dl>
 
         <h1>
           Grounded generation, world models,<br />
@@ -256,6 +289,13 @@
               Retrieval runs in your browser over the project's real vectors.
             </span>
           </p>
+
+          <dl class="mstats">
+            <p class="mstats-head">Parity suite</p>
+            <div><dt>Curated questions</dt><dd>35</dd></div>
+            <div><dt>Ranked passages</dt><dd>350</dd></div>
+            <div><dt>Retrieval modes</dt><dd>2</dd></div>
+          </dl>
 
           <aside class="note note-s21">
             The hard part was never answering. It's refusing.
@@ -572,7 +612,7 @@
       </footer>
     </article>
 
-    <script src="script.js?v=7"></script>
-    <script src="3d-graph.js?v=7"></script>
+    <script src="script.js?v=8"></script>
+    <script src="3d-graph.js?v=8"></script>
   </body>
 </html>
