@@ -5,563 +5,574 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Grzegorz Mróz — Machine Learning & AI Engineer. Master's student at AGH University of Krakow with a strong mathematical background. Portfolio showcasing ML projects, data science skills, and professional experience."
+      content="Grzegorz Mróz — GenAI & LLM Engineer. Quantitative Analyst at UBS, ML & AI master's student at AGH University of Krakow. Retrieval-grounded LLM systems, model-based reinforcement learning, and quantitative risk."
     />
     <meta name="author" content="Grzegorz Mróz" />
     <meta
       name="keywords"
-      content="Machine Learning, AI, Data Science, Python, Portfolio, Grzegorz Mróz"
+      content="GenAI, LLM, RAG, world models, reinforcement learning, LangChain, Anthropic API, Machine Learning, Python, Quantitative Analyst, Grzegorz Mróz"
     />
-    <title>Grzegorz Mróz | ML & AI Engineer</title>
+    <meta name="theme-color" content="#f4f5f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#16171b" media="(prefers-color-scheme: dark)" />
+    <title>Grzegorz Mróz — Grounded generation, world models, quantitative risk</title>
 
-    <!-- Favicon -->
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%23f4f5f3'/><text x='50' y='72' font-size='62' font-family='Georgia,serif' text-anchor='middle' fill='%231b44c8'>M</text></svg>"
     />
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..600&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-
-    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js" defer></script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=7" />
   </head>
   <body>
-    <!-- Particle Canvas Background -->
-    <canvas id="particles-canvas"></canvas>
+    <a href="#s1" class="skip-link">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav id="navbar" class="navbar">
-      <div class="nav-container">
-        <a href="#" class="logo">
-          <span class="logo-bracket">&lt;</span>GM<span class="logo-bracket">/&gt;</span>
-        </a>
-        <div class="nav-links">
-          <a href="#about" data-section="about">About</a>
-          <a href="#education" data-section="education">Education</a>
-          <a href="#skills" data-section="skills">Skills</a>
-          <a href="#projects" data-section="projects">Projects</a>
-          <a href="#experience" data-section="experience">Experience</a>
-          <a href="#contact" class="btn-nav-contact">Contact</a>
-        </div>
-        <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu">
-          <span class="bar"></span>
-          <span class="bar"></span>
-          <span class="bar"></span>
+    <!-- ========== RUNNING HEAD ========== -->
+    <div class="runhead" id="runhead">
+      <div class="runhead-inner">
+        <span class="runhead-author">Mróz</span>
+        <span class="runhead-title">Grounded generation, world models, quantitative risk</span>
+        <button class="runhead-toc-btn" id="toc-btn" aria-expanded="false" aria-controls="toc">
+          Contents
         </button>
       </div>
-    </nav>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu" id="mobile-menu">
-      <a href="#about" class="mobile-link">About</a>
-      <a href="#education" class="mobile-link">Education</a>
-      <a href="#skills" class="mobile-link">Skills</a>
-      <a href="#projects" class="mobile-link">Projects</a>
-      <a href="#experience" class="mobile-link">Experience</a>
-      <a href="#contact" class="mobile-link">Contact</a>
     </div>
 
-    <!-- ============ HERO SECTION ============ -->
-    <header id="home" class="hero">
-      <div class="hero-content">
-        <div class="hero-text">
-          <span class="hero-badge">
-            <span class="badge-dot"></span>
-            Open to opportunities
-          </span>
-          <h1>
-            Hi, I'm
-            <span class="gradient-text">Grzegorz Mróz</span>
-          </h1>
-          <h2 class="subtitle">
-            <span id="typed-text"></span><span class="cursor">|</span>
-          </h2>
-          <p class="hero-description">
-            Leveraging advanced mathematics and deep learning to build robust
-            predictive models. Passionate about solving complex real-world
-            problems through data and AI.
-          </p>
+    <article class="paper">
+      <!-- ========== TITLE BLOCK ========== -->
+      <header class="titleblock">
+        <p class="stamp">Portfolio · Kraków, Poland · Revised August 2026</p>
 
-          <div class="hero-cta">
-            <a href="#projects" class="btn btn-primary">
-              <i class="fas fa-rocket"></i> View My Work
-            </a>
-            <a href="#contact" class="btn btn-glass">
-              <i class="fas fa-paper-plane"></i> Get In Touch
-            </a>
-          </div>
+        <h1>
+          Grounded generation, world models,<br />
+          and quantitative risk
+        </h1>
 
-          <div class="social-links">
-            <a
-              href="https://github.com/Grzmro"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              class="social-icon"
-            >
-              <i class="fab fa-github"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/grzegorz-mr%C3%B3z-b63266239"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              class="social-icon"
-            >
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="mailto:grzegorzmroz555@gmail.com"
-              aria-label="Email"
-              class="social-icon"
-            >
-              <i class="fas fa-envelope"></i>
-            </a>
-          </div>
-        </div>
+        <p class="authors">Grzegorz&nbsp;Mróz<sup>1,2</sup></p>
 
-        <div class="hero-visual">
-          <div id="skills-graph-container">
-            <canvas id="skills-graph"></canvas>
-            <div class="graph-hint">
-              <i class="fas fa-hand-pointer"></i> Drag to rotate · Scroll to zoom
-            </div>
-          </div>
-        </div>
-      </div>
+        <ol class="affiliations">
+          <li>
+            <sup>1</sup> Quantitative Analyst, Risk — UBS, Kraków
+          </li>
+          <li>
+            <sup>2</sup> M.Eng. Computer Science, Machine Learning &amp; AI —
+            AGH University of Krakow
+          </li>
+        </ol>
 
-      <a href="#about" class="scroll-indicator" aria-label="Scroll down">
-        <div class="mouse">
-          <div class="wheel"></div>
-        </div>
-        <span class="scroll-text">Scroll</span>
-      </a>
-    </header>
-
-    <!-- ============ ABOUT SECTION ============ -->
-    <section id="about" class="section">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">01.</span> Personal Profile
-        </h2>
-        <div class="about-content">
-          <div class="about-text reveal">
-            <p class="lead">
-              Master’s student in Machine Learning & AI at AGH with a BSc in Mathematics.
-            </p>
-            <p>
-              Experienced in data analysis at UBS, with technical skills in Python and SQL. Exceptionally hard-working, results-oriented, and ready to tackle complex technical challenges.
-            </p>
-            <p>
-              Passionate about leveraging an analytical foundation to understand and build robust predictive models in a professional environment.
-            </p>
-          </div>
-          <div class="about-cards">
-            <div class="about-card reveal" style="--delay: 0.1s">
-              <div class="about-card-icon">
-                <i class="fas fa-graduation-cap"></i>
-              </div>
-              <h3>M.Sc. Student</h3>
-              <p>AGH University of Krakow<br />Machine Learning & AI</p>
-            </div>
-            <div class="about-card reveal" style="--delay: 0.2s">
-              <div class="about-card-icon">
-                <i class="fas fa-brain"></i>
-              </div>
-              <h3>Math Background</h3>
-              <p>B.Sc. Mathematics<br />Calculus, Probability & Linear Algebra</p>
-            </div>
-            <div class="about-card reveal" style="--delay: 0.3s">
-              <div class="about-card-icon">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h3>Data Analyst</h3>
-              <p>Professional experience at UBS<br />Python, SQL & Jira</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ EDUCATION SECTION ============ -->
-    <section id="education" class="section section-alt">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">02.</span> Education
-        </h2>
-        <div class="timeline">
-          <!-- Master's -->
-          <div class="timeline-item reveal" style="--delay: 0.1s">
-            <div class="timeline-marker">
-              <div class="timeline-dot-outer">
-                <div class="timeline-dot-inner"></div>
-              </div>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-badge">Oct 2025 – Present</div>
-              <h3>Master of Science in Computer Science</h3>
-              <h4>
-                <i class="fas fa-university"></i> AGH University of Krakow
-              </h4>
-              <p class="specialization">
-                <i class="fas fa-microchip"></i> Specialization: Machine Learning and AI
-              </p>
-              <div class="modules">
-                <span>Java</span>
-                <span>Python</span>
-                <span>ML Algorithms</span>
-                <span>Artificial Intelligence</span>
-                <span>Prompt Engineering</span>
-                <span>UNIX/Linux</span>
-                <span>Web Development</span>
-                <span>UX Design</span>
-                <span>Theory of Computation</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bachelor's -->
-          <div class="timeline-item reveal" style="--delay: 0.2s">
-            <div class="timeline-marker">
-              <div class="timeline-dot-outer">
-                <div class="timeline-dot-inner"></div>
-              </div>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-badge">Oct 2022 – Jul 2025</div>
-              <h3>Bachelor of Science in Mathematics</h3>
-              <h4>
-                <i class="fas fa-university"></i> AGH University of Krakow
-              </h4>
-              <div class="thesis-box">
-                <i class="fas fa-scroll"></i>
-                <div>
-                  <strong>Thesis:</strong> Fourier method of separation of
-                  variables for second-order partial differential equations.
-                </div>
-              </div>
-              <p class="timeline-note">
-                <i class="fas fa-link"></i>
-                <strong>Relevance to ML:</strong> Strong foundation in
-                Calculus, Linear Algebra, Probability Theory.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SKILLS SECTION ============ -->
-    <section id="skills" class="section">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">03.</span> Technical Skills
-        </h2>
-
-        <div class="skills-grid">
-          <!-- ML & AI -->
-          <div class="skill-card reveal" style="--delay: 0.05s">
-            <div class="skill-card-header">
-              <div class="skill-icon-wrap">
-                <i class="fas fa-robot"></i>
-              </div>
-              <h3>Machine Learning & AI</h3>
-            </div>
-            <div class="skill-tags">
-              <span>Keras</span>
-              <span>scikit-learn</span>
-              <span>TensorFlow</span>
-              <span>Prompt Engineering</span>
-            </div>
-          </div>
-
-          <!-- Data Science -->
-          <div class="skill-card reveal" style="--delay: 0.1s">
-            <div class="skill-card-header">
-              <div class="skill-icon-wrap">
-                <i class="fas fa-chart-bar"></i>
-              </div>
-              <h3>Data Science</h3>
-            </div>
-            <div class="skill-tags">
-              <span>Python</span>
-              <span>pandas</span>
-              <span>NumPy</span>
-              <span>R</span>
-              <span>Matplotlib</span>
-              <span>Seaborn</span>
-              <span>SQL</span>
-              <span>Excel (Advanced)</span>
-            </div>
-          </div>
-
-          <!-- Mathematics -->
-          <div class="skill-card reveal" style="--delay: 0.15s">
-            <div class="skill-card-header">
-              <div class="skill-icon-wrap">
-                <i class="fas fa-square-root-alt"></i>
-              </div>
-              <h3>Mathematical Concepts</h3>
-            </div>
-            <div class="skill-tags">
-              <span>Linear Algebra</span>
-              <span>ODEs & PDEs</span>
-              <span>Portfolio Theory</span>
-              <span>Probability Theory</span>
-              <span>Statistics</span>
-            </div>
-          </div>
-
-          <!-- Tools -->
-          <div class="skill-card reveal" style="--delay: 0.2s">
-            <div class="skill-card-header">
-              <div class="skill-icon-wrap">
-                <i class="fas fa-wrench"></i>
-              </div>
-              <h3>Tools & Platforms</h3>
-            </div>
-            <div class="skill-tags">
-              <span>Git / GitHub</span>
-              <span>Jupyter</span>
-              <span>Apache Airflow</span>
-              <span>Jira</span>
-              <span>Linux / UNIX</span>
-            </div>
-          </div>
-
-          <!-- Languages -->
-          <div class="skill-card reveal" style="--delay: 0.25s">
-            <div class="skill-card-header">
-              <div class="skill-icon-wrap">
-                <i class="fas fa-language"></i>
-              </div>
-              <h3>Languages</h3>
-            </div>
-            <div class="skill-tags">
-              <span>🇵🇱 Polish (Native)</span>
-              <span>🇬🇧 English (C1 / Advanced)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ PROJECTS SECTION ============ -->
-    <section id="projects" class="section section-alt">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">04.</span> Selected Projects
-        </h2>
-
-        <div class="projects-grid">
-          <!-- Football Score Predictor -->
-          <article class="project-card reveal" style="--delay: 0.1s">
-            <div class="project-glow"></div>
-            <div class="project-content">
-              <div class="project-top">
-                <i class="fas fa-folder-open project-folder"></i>
-                <div class="project-links-top">
-                  <a
-                    href="https://github.com/Grzmro/football-score-predictor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                  <a
-                    href="https://github.com/Grzmro/football-score-predictor"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="External link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                </div>
-              </div>
-              <h3 class="project-title">Football Score Predictor</h3>
-              <p class="project-desc">
-                Engineered Machine Learning models in Python (scikit-learn, pandas) to forecast football match outcomes based on historical data. Executed advanced feature engineering, incorporating rolling averages for team form and head-to-head statistics to optimize model accuracy.
-              </p>
-              <div class="project-tech">
-                <span>Python</span>
-                <span>scikit-learn</span>
-                <span>pandas</span>
-                <span>Feature Engineering</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Darwin World -->
-          <article class="project-card reveal" style="--delay: 0.2s">
-            <div class="project-glow"></div>
-            <div class="project-content">
-              <div class="project-top">
-                <i class="fas fa-folder-open project-folder"></i>
-                <div class="project-links-top">
-                  <a
-                    href="https://github.com/Grzmro/Darwin-Game"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="GitHub link"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                  <a
-                    href="https://github.com/Grzmro/Darwin-Game"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="External link"
-                  >
-                    <i class="fas fa-external-link-alt"></i>
-                  </a>
-                </div>
-              </div>
-              <h3 class="project-title">Darwin World – Evolutionary Simulation</h3>
-              <p class="project-desc">
-                Developed a robust multi-agent ecosystem simulation in Java, utilizing Genetic Algorithms to model evolutionary processes, mutations, and survival strategies. Designed a complex Object-Oriented architecture to manage agent interactions and implemented real-time population statistics visualization.
-              </p>
-              <div class="project-tech">
-                <span>Java</span>
-                <span>Genetic Algorithms</span>
-                <span>OOP</span>
-                <span>Simulation</span>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ EXPERIENCE SECTION ============ -->
-    <section id="experience" class="section">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">05.</span> Experience
-        </h2>
-        <div class="timeline">
-          <!-- Data Analyst @ UBS -->
-          <div class="timeline-item reveal" style="--delay: 0.1s">
-            <div class="timeline-marker">
-              <div class="timeline-dot-outer">
-                <div class="timeline-dot-inner"></div>
-              </div>
-            </div>
-            <div class="timeline-card">
-              <div class="timeline-badge">Aug 2025 – Feb 2026</div>
-              <h3>Data Analyst</h3>
-              <h4>
-                <i class="fas fa-building"></i> UBS
-                <span class="location-tag">
-                  <i class="fas fa-map-marker-alt"></i> Kraków
-                </span>
-              </h4>
-              <ul class="experience-list">
-                <li>
-                  Analyzed large datasets to identify discrepancies, ensuring
-                  data integrity for critical regulatory reporting.
-                </li>
-                <li>
-                  Collaborated with engineering teams to resolve data quality
-                  incidents managed via Jira, significantly reducing resolution
-                  time for reporting errors.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ AWARDS SECTION ============ -->
-    <section id="awards" class="section section-alt">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">06.</span> Awards & Achievements
-        </h2>
-        
-        <div class="about-cards" style="grid-template-columns: 1fr; max-width: 600px; margin: 0 auto;">
-          <div class="about-card reveal" style="text-align: center; padding: 3rem 2rem;">
-            <div class="about-card-icon" style="margin: 0 auto 1.5rem;">
-              <i class="fas fa-trophy" style="color: #f59e0b;"></i>
-            </div>
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">HackYeah 2025</h3>
-            <p style="font-size: 1.1rem;">Finalist in Europe's largest stationary hackathon.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ CONTACT / FOOTER ============ -->
-    <footer id="contact" class="footer">
-      <div class="container">
-        <div class="footer-cta reveal">
-          <span class="section-number">07.</span>
-          <h2>Let's Work Together</h2>
-          <p>
-            I'm always open to discussing new projects, creative ideas, or
-            opportunities to be part of your visions. Whether you need an ML
-            engineer or a data analyst — let's talk!
-          </p>
-          <a href="mailto:grzegorzmroz555@gmail.com" class="btn btn-primary btn-lg">
-            <i class="fas fa-envelope"></i> Say Hello
+        <nav class="correspondence" aria-label="Contact and profiles">
+          <a href="mailto:grzegorzmroz555@gmail.com">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 3.5h13v9h-13z" /><path d="m1.8 4 6.2 4.6L14.2 4" /></svg>
+            grzegorzmroz555@gmail.com
           </a>
-        </div>
+          <a href="https://github.com/Grzmro" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a7 7 0 0 0-2.2 13.6c.35.07.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.81-.78-1.03-.78-1.03-.64-.43.05-.43.05-.43.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.25-.76.45-.94-1.56-.18-3.2-.78-3.2-3.47 0-.77.28-1.4.72-1.89-.07-.18-.31-.9.07-1.87 0 0 .59-.19 1.93.72a6.7 6.7 0 0 1 3.51 0c1.34-.91 1.93-.72 1.93-.72.38.97.14 1.69.07 1.87.45.49.72 1.12.72 1.89 0 2.7-1.64 3.29-3.21 3.46.25.22.48.65.48 1.32v1.96c0 .19.13.41.48.34A7 7 0 0 0 8 1Z" /></svg>
+            github.com/Grzmro
+          </a>
+          <a href="https://www.linkedin.com/in/grzegorz-m-b63266239" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6.5h2v7H3zM4 3a1.2 1.2 0 1 0 0 2.4A1.2 1.2 0 0 0 4 3ZM7 6.5h2v1a2.4 2.4 0 0 1 2-1c1.6 0 2.5 1 2.5 2.9v4.1h-2v-3.7c0-1-.4-1.6-1.3-1.6-.7 0-1.2.5-1.2 1.6v3.7H7Z" /></svg>
+            LinkedIn
+          </a>
+          <a href="assets/Grzegorz_Mroz_CV.pdf" download class="corr-strong">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3" /><path d="M2.5 11v2.5h11V11" /></svg>
+            Download CV (PDF)
+          </a>
+        </nav>
+      </header>
 
-        <div class="footer-links reveal">
-          <div class="footer-social">
-            <a
-              href="https://github.com/Grzmro"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-            >
-              <i class="fab fa-github"></i>
-            </a>
-            <a
-              href="https://www.linkedin.com/in/grzegorz-mr%C3%B3z-b63266239"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-            >
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="mailto:grzegorzmroz555@gmail.com" aria-label="Email">
-              <i class="fas fa-envelope"></i>
-            </a>
-          </div>
-        </div>
+      <!-- ========== ABSTRACT ========== -->
+      <section class="abstract" aria-labelledby="abstract-h">
+        <h2 id="abstract-h">Abstract</h2>
+        <p>
+          This page documents three strands of applied work: retrieval-grounded
+          language systems that <em>refuse</em> rather than fabricate, model-based
+          reinforcement learning agents that learn a world model and plan inside
+          it, and quantitative risk models running in production at a global
+          bank. Each section states what was built, the method, and the measured
+          result. Source code and live demonstrations are linked throughout;
+          every figure is reproduced from real runs, not illustration.
+        </p>
+        <p class="keywords">
+          <em>Keywords —</em> retrieval-augmented generation · world models ·
+          reinforcement learning · quantitative risk · Python
+        </p>
 
-        <div class="footer-bottom">
-          <p>
-            &copy; <span id="footer-year"></span> Grzegorz Mróz · Built with
-            <span class="heart">♥</span>
+        <aside class="note note-abstract">
+          Every number on this page is measured, not estimated.
+        </aside>
+      </section>
+
+      <!-- ========== TABLE OF CONTENTS (margin, sticky) ========== -->
+      <nav class="toc" id="toc" aria-label="Table of contents">
+        <p class="toc-head">Contents</p>
+        <ol>
+          <li><a href="#s1"><span class="toc-num">1</span> Introduction</a></li>
+          <li><a href="#s2"><span class="toc-num">2</span> Systems</a>
+            <ol>
+              <li><a href="#s2-1"><span class="toc-num">2.1</span> Retrieval grounding</a></li>
+              <li><a href="#s2-2"><span class="toc-num">2.2</span> World models</a></li>
+            </ol>
+          </li>
+          <li><a href="#s3"><span class="toc-num">3</span> Methods &amp; materials</a></li>
+          <li><a href="#s4"><span class="toc-num">4</span> Professional experience</a></li>
+          <li><a href="#s5"><span class="toc-num">5</span> Education</a></li>
+          <li><a href="#s6"><span class="toc-num">6</span> Recognition</a></li>
+          <li><a href="#correspondence"><span class="toc-num">—</span> Correspondence</a></li>
+        </ol>
+      </nav>
+
+      <!-- ========== 1. INTRODUCTION ========== -->
+      <section id="s1" class="sec">
+        <h2><span class="sec-num">1</span> Introduction</h2>
+
+        <p class="lead">
+          I build systems where a language model's output has to be
+          <em>defensible</em> — traceable to a source, or refused outright.
+        </p>
+
+        <p>
+          My background runs mathematics first, machine learning second. A BSc in
+          Mathematics at AGH gave me probability, linear algebra and differential
+          equations before I wrote a line of PyTorch; the M.Eng. in Machine
+          Learning &amp; AI that followed sits on top of that. In parallel I work
+          at UBS in Kraków, where I moved from building regulatory data pipelines
+          to developing quantitative risk models under the Pillar 2 framework
+          (§<a href="#s4">4</a>).
+        </p>
+
+        <p>
+          The two systems described in §<a href="#s2">2</a> were chosen because
+          they are the ones with results I can defend numerically. The first
+          treats hallucination as a <em>failure to refuse</em> and tests for it
+          adversarially. The second learns a model of an environment and trains a
+          policy entirely inside its own imagination, then measures whether those
+          imagined rollouts actually correspond to reality.
+        </p>
+
+        <aside class="note note-s1">
+          The maths degree came first — on purpose.
+        </aside>
+      </section>
+
+      <!-- ========== 2. SYSTEMS ========== -->
+      <section id="s2" class="sec">
+        <h2><span class="sec-num">2</span> Systems</h2>
+
+        <!-- ---- 2.1 RAG ---- -->
+        <section id="s2-1" class="subsec">
+          <h3><span class="sec-num">2.1</span> Retrieval grounding, and the discipline of refusing</h3>
+
+          <p class="repo-line">
+            <a href="https://github.com/Grzmro/fastapi-rag-anthropic" target="_blank" rel="noopener noreferrer">
+              github.com/Grzmro/fastapi-rag-anthropic
+            </a>
           </p>
-          <div class="footer-info">
-            <span><i class="fas fa-phone"></i> 791 382 577</span>
-            <span><i class="fas fa-map-marker-alt"></i> Kraków, Poland</span>
-          </div>
-        </div>
-      </div>
-    </footer>
 
-    <script src="script.js"></script>
-    <script src="3d-graph.js"></script>
+          <figure class="fig">
+            <div class="fig-body">
+              <svg viewBox="0 0 640 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Retrieval-augmented generation pipeline: documents are chunked and embedded into a Chroma vector database, top-k fragments are retrieved and passed to Claude, which returns an answer with citations mapped back to source and page.">
+                <g class="dgm">
+                  <rect class="dgm-box" x="6" y="38" width="104" height="46" rx="3" />
+                  <text class="dgm-t" x="58" y="58">Documents</text>
+                  <text class="dgm-s" x="58" y="73">PDF · MD · TXT</text>
+
+                  <line class="dgm-arr" x1="112" y1="61" x2="158" y2="61" />
+                  <polygon class="dgm-head" points="163,61 155,57 155,65" />
+                  <text class="dgm-s" x="136" y="51">chunk + embed</text>
+
+                  <rect class="dgm-box" x="166" y="38" width="104" height="46" rx="3" />
+                  <text class="dgm-t" x="218" y="58">Chroma</text>
+                  <text class="dgm-s" x="218" y="73">vector DB</text>
+
+                  <line class="dgm-arr" x1="272" y1="61" x2="318" y2="61" />
+                  <polygon class="dgm-head" points="323,61 315,57 315,65" />
+                  <text class="dgm-s" x="296" y="51">top-k</text>
+
+                  <rect class="dgm-box dgm-box-key" x="326" y="38" width="104" height="46" rx="3" />
+                  <text class="dgm-t dgm-key" x="378" y="58">Claude</text>
+                  <text class="dgm-s" x="378" y="73">Anthropic API</text>
+
+                  <line class="dgm-arr" x1="432" y1="61" x2="478" y2="61" />
+                  <polygon class="dgm-head" points="483,61 475,57 475,65" />
+
+                  <rect class="dgm-box" x="486" y="38" width="148" height="46" rx="3" />
+                  <text class="dgm-t" x="560" y="58">Answer + citations</text>
+                  <text class="dgm-s dgm-key" x="560" y="73">[1] source · page · quote</text>
+
+                  <text class="dgm-api" x="58" y="24">POST /ingest</text>
+                  <text class="dgm-api" x="378" y="24">POST /ask</text>
+                  <text class="dgm-s" x="320" y="110">FastAPI · Docker · AWS EC2 · pytest</text>
+                </g>
+              </svg>
+            </div>
+            <figcaption>
+              <span class="fig-label">Figure 1.</span> Request path. Fragment
+              markers returned by the model are resolved to source and page
+              <em>in code</em>, so filenames and page numbers cannot be
+              hallucinated — the model never writes a citation itself.
+            </figcaption>
+          </figure>
+
+          <p>
+            A FastAPI service chunks documents, embeds them with
+            sentence-transformers and indexes them in a persistent Chroma vector
+            store. Claude answers strictly from the retrieved fragments and
+            returns structured output. The design decision that matters is the
+            last one in Figure&nbsp;1: the model emits fragment markers, and the
+            mapping from marker to <em>source, page, verbatim quote</em> happens
+            in application code.
+          </p>
+
+          <p>
+            Grounding is validated with a <strong>trap-question protocol</strong>.
+            Questions are constructed so the topic is present in the corpus but
+            the answer is not. A system that pattern-matches on topic similarity
+            will confabulate; a grounded one must return
+            <mark>an empty citation list and decline</mark>. That refusal path is
+            the actual test, and it is covered by pytest along with the rest of
+            the deterministic pipeline.
+          </p>
+
+          <ul class="tech">
+            <li>Python</li><li>LangChain</li><li>Anthropic API</li>
+            <li>Chroma</li><li>FastAPI</li><li>Docker</li><li>AWS</li>
+          </ul>
+
+          <p class="demo-line">
+            <a class="demo-link" href="demos/rag/">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z" /></svg>
+              Open live demonstration
+            </a>
+            <span class="demo-note">
+              Retrieval runs in your browser over the project's real vectors.
+            </span>
+          </p>
+
+          <aside class="note note-s21">
+            The hard part was never answering. It's refusing.
+          </aside>
+        </section>
+
+        <!-- ---- 2.2 Dreamer ---- -->
+        <section id="s2-2" class="subsec">
+          <h3><span class="sec-num">2.2</span> Learning a world model, then planning inside it</h3>
+
+          <p class="repo-line">
+            <a href="https://github.com/Grzmro/dreamer-rssm" target="_blank" rel="noopener noreferrer">
+              github.com/Grzmro/dreamer-rssm
+            </a>
+          </p>
+
+          <figure class="fig">
+            <div class="fig-body">
+              <svg viewBox="0 0 640 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Learning curve on ALE/Pong-v5. The Dreamer agent rises from the random-policy floor near -21 to -1.7 average return within 60000 environment steps, while PPO and DQN baselines remain near the floor on the same budget.">
+                <g class="plt">
+                  <!-- y gridlines -->
+                  <line class="plt-grid" x1="62" y1="40" x2="624" y2="40" />
+                  <line class="plt-grid" x1="62" y1="98" x2="624" y2="98" />
+                  <line class="plt-grid" x1="62" y1="156" x2="624" y2="156" />
+
+                  <!-- axes -->
+                  <line class="plt-axis" x1="62" y1="32" x2="62" y2="170" />
+                  <line class="plt-axis" x1="62" y1="170" x2="624" y2="170" />
+
+                  <!-- y ticks -->
+                  <g class="plt-tick">
+                    <line class="plt-axis" x1="57" y1="40" x2="62" y2="40" />
+                    <line class="plt-axis" x1="57" y1="98" x2="62" y2="98" />
+                    <line class="plt-axis" x1="57" y1="156" x2="62" y2="156" />
+                  </g>
+                  <g class="plt-lab plt-lab-r">
+                    <text x="51" y="44">0</text>
+                    <text x="51" y="102">−10</text>
+                    <text x="51" y="160">−20</text>
+                  </g>
+
+                  <!-- x ticks -->
+                  <g class="plt-tick">
+                    <line class="plt-axis" x1="62" y1="170" x2="62" y2="175" />
+                    <line class="plt-axis" x1="343" y1="170" x2="343" y2="175" />
+                    <line class="plt-axis" x1="624" y1="170" x2="624" y2="175" />
+                  </g>
+                  <g class="plt-lab plt-lab-c">
+                    <text x="62" y="188">0</text>
+                    <text x="343" y="188">30k</text>
+                    <text x="624" y="188">60k</text>
+                  </g>
+
+                  <!-- axis titles -->
+                  <text class="plt-axtitle plt-lab-c" x="343" y="207">environment steps</text>
+                  <text class="plt-axtitle" transform="rotate(-90 16 101)" x="16" y="101" text-anchor="middle">episode return</text>
+
+                  <!-- baselines (muted) -->
+                  <polyline class="plt-base" points="62,164 152,163 262,164 382,163 502,164 624,163" />
+                  <polyline class="plt-base2" points="62,158 162,155 282,157 402,153 522,156 624,154" />
+
+                  <!-- dreamer (result, pen) -->
+                  <polyline class="plt-hero" points="62,166 107,163 152,136 197,118 242,94 332,76 422,64 512,56 624,50" />
+                  <circle class="plt-dot" cx="624" cy="50" r="3.4" />
+
+                  <!-- direct labels -->
+                  <text class="plt-key plt-lab-r" x="616" y="38">Dreamer  −1.7</text>
+                  <text class="plt-lab plt-lab-r" x="616" y="150">PPO  ≈ −18</text>
+                  <text class="plt-lab plt-lab-r" x="430" y="180">DQN  ≈ −20</text>
+                </g>
+              </svg>
+            </div>
+            <figcaption>
+              <span class="fig-label">Figure 2.</span> ALE/Pong-v5, shared
+              interaction budget. Baselines follow the CleanRL protocol and are
+              drawn muted; the agent under test is drawn in full weight. Trained
+              vs. random policy: −2.0&nbsp;±&nbsp;1.6 vs.
+              −20.2&nbsp;±&nbsp;1.9, <em>p</em>&nbsp;=&nbsp;8.5×10⁻⁶.
+            </figcaption>
+          </figure>
+
+          <p>
+            A DreamerV2/V3-style agent written from scratch in PyTorch: a CNN
+            encoder/decoder, an RSSM combining a GRU deterministic path with
+            categorical stochastic latents, and an actor–critic trained purely on
+            imagined rollouts through the frozen world model. No gradients cross
+            from the policy back into the world model — that separation is
+            unit-tested rather than assumed.
+          </p>
+
+          <p>
+            The headline number in Figure&nbsp;2 is only half the claim. The
+            other half is whether the model's imagination is trustworthy:
+            imagined returns track real returns at
+            <mark>Pearson <em>r</em> = 0.96</mark>, the reward head detects
+            scoring events at ROC-AUC 0.987, and open-loop dreams stay coherent
+            out to a horizon of 40 — 2.7× the horizon used in training. Hydra
+            configs, ablation presets and SLURM scripts for Cyfronet Athena are
+            included.
+          </p>
+
+          <ul class="tech">
+            <li>Python</li><li>PyTorch</li><li>RSSM</li>
+            <li>Reinforcement Learning</li><li>Hydra</li><li>SLURM</li>
+          </ul>
+
+          <p class="demo-line">
+            <a class="demo-link" href="demos/dreamer/">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z" /></svg>
+              Open live demonstration
+            </a>
+            <span class="demo-note">
+              A recorded match, shown beside the agent's own decoded predictions.
+            </span>
+          </p>
+
+          <aside class="note note-s22">
+            From a −21 floor to −1.7, in 60k steps.
+          </aside>
+        </section>
+      </section>
+
+      <!-- ========== 3. METHODS & MATERIALS ========== -->
+      <section id="s3" class="sec">
+        <h2><span class="sec-num">3</span> Methods &amp; materials</h2>
+
+        <p>
+          The tools below are grouped by the role they play rather than by
+          vendor. Figure&nbsp;3 shows the same set as a graph: rotate it to see
+          which competencies sit adjacent to which.
+        </p>
+
+        <figure class="fig fig-wide">
+          <div class="fig-body fig-body-graph">
+            <div id="skills-graph-container">
+              <canvas id="skills-graph"></canvas>
+              <p class="graph-hint">Drag to rotate · scroll to zoom</p>
+            </div>
+          </div>
+          <figcaption>
+            <span class="fig-label">Figure 3.</span> Competency graph, rendered
+            in three dimensions. Interactive; filter by cluster using the
+            controls above.
+          </figcaption>
+        </figure>
+
+        <div class="matgrid">
+          <section class="mat">
+            <h3>GenAI &amp; LLMs</h3>
+            <ul class="tech">
+              <li>Anthropic API</li><li>Claude Code</li><li>LangChain</li>
+              <li>RAG</li><li>Embeddings &amp; semantic search</li>
+              <li>Vector databases</li><li>Prompt engineering</li>
+              <li>Output evaluation</li>
+            </ul>
+          </section>
+
+          <section class="mat">
+            <h3>Machine learning</h3>
+            <ul class="tech">
+              <li>PyTorch</li><li>scikit-learn</li><li>Neural networks</li>
+              <li>Reinforcement learning</li><li>World models</li>
+            </ul>
+          </section>
+
+          <section class="mat">
+            <h3>Programming</h3>
+            <ul class="tech">
+              <li>Python</li><li>pandas</li><li>NumPy</li><li>SQL</li>
+              <li>Java</li><li>REST APIs</li><li>Git</li>
+            </ul>
+          </section>
+
+          <section class="mat">
+            <h3>Data, cloud &amp; tooling</h3>
+            <ul class="tech">
+              <li>AWS (EC2, S3)</li><li>Docker</li><li>FastAPI</li>
+              <li>Jupyter</li><li>Jira</li>
+            </ul>
+          </section>
+
+          <section class="mat">
+            <h3>Mathematics</h3>
+            <ul class="tech">
+              <li>Linear algebra</li><li>Probability theory</li>
+              <li>Statistics</li><li>ODEs &amp; PDEs</li>
+            </ul>
+          </section>
+
+          <section class="mat">
+            <h3>Languages</h3>
+            <ul class="tech">
+              <li>Polish — native</li><li>English — C1</li>
+            </ul>
+          </section>
+        </div>
+      </section>
+
+      <!-- ========== 4. EXPERIENCE ========== -->
+      <section id="s4" class="sec">
+        <h2><span class="sec-num">4</span> Professional experience</h2>
+
+        <table class="tbl">
+          <caption>
+            <span class="fig-label">Table 1.</span> Roles held, most recent
+            first. Both positions at UBS, Kraków.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Period</th>
+              <th scope="col">Role</th>
+              <th scope="col">Work</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" class="tbl-when">Jul 2026 —<br /><span>present</span></th>
+              <td class="tbl-role">Quantitative Analyst, Risk</td>
+              <td>
+                Development of quantitative risk models within the Pillar 2
+                framework; model implementation and analysis in Python and SQL.
+              </td>
+            </tr>
+            <tr>
+              <th scope="row" class="tbl-when">Aug 2025 —<br /><span>Feb 2026</span></th>
+              <td class="tbl-role">Data Analyst</td>
+              <td>
+                Built and maintained production Python (pandas, NumPy) and SQL
+                pipelines collecting, cleaning and structuring large datasets for
+                regulatory reporting under strict data-integrity requirements.
+                Designed statistical data-quality checks and diagnosed root
+                causes of data incidents with cross-functional engineering teams.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <aside class="note note-s4">
+          Regulatory reporting leaves no room for a wrong number.
+        </aside>
+      </section>
+
+      <!-- ========== 5. EDUCATION ========== -->
+      <section id="s5" class="sec">
+        <h2><span class="sec-num">5</span> Education</h2>
+
+        <div class="edu">
+          <h3>
+            M.Eng. Computer Science — Machine Learning &amp; AI
+            <span class="edu-when">Oct 2025 — 2027 (expected)</span>
+          </h3>
+          <p class="edu-where">AGH University of Krakow</p>
+          <ul class="tech">
+            <li>Machine learning algorithms</li><li>Neural networks</li>
+            <li>Reinforcement learning</li><li>Artificial intelligence</li>
+            <li>Computational intelligence</li><li>Statistics</li>
+          </ul>
+        </div>
+
+        <div class="edu">
+          <h3>
+            B.Sc. Mathematics
+            <span class="edu-when">Oct 2022 — Jul 2025</span>
+          </h3>
+          <p class="edu-where">AGH University of Krakow</p>
+          <p class="thesis">
+            <span class="thesis-label">Thesis —</span> Fourier method of
+            separation of variables for second-order partial differential
+            equations.
+          </p>
+          <ul class="tech">
+            <li>Probability theory</li><li>Statistics</li>
+            <li>Linear algebra</li><li>Differential equations</li>
+            <li>Numerical analysis</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ========== 6. RECOGNITION ========== -->
+      <section id="s6" class="sec">
+        <h2><span class="sec-num">6</span> Recognition</h2>
+        <p>
+          <strong>HackYeah 2025 — Finalist.</strong> Reached the finals of
+          Europe's largest stationary hackathon, delivering a working prototype
+          in a team under a fixed time budget.
+        </p>
+      </section>
+
+      <!-- ========== CORRESPONDENCE ========== -->
+      <footer id="correspondence" class="sec closing">
+        <h2><span class="sec-num">—</span> Correspondence</h2>
+
+        <p>
+          I'm open to work on GenAI prototypes, applied ML, and quantitative
+          modelling. If any part of this page is relevant to something you're
+          building, write to me directly.
+        </p>
+
+        <p class="corr-main">
+          <a href="mailto:grzegorzmroz555@gmail.com">grzegorzmroz555@gmail.com</a>
+        </p>
+
+        <dl class="corr-meta">
+          <div><dt>Telephone</dt><dd>+48 791 382 577</dd></div>
+          <div><dt>Location</dt><dd>Kraków, Poland</dd></div>
+          <div><dt>Code</dt><dd><a href="https://github.com/Grzmro" target="_blank" rel="noopener noreferrer">github.com/Grzmro</a></dd></div>
+          <div><dt>Profile</dt><dd><a href="https://www.linkedin.com/in/grzegorz-m-b63266239" target="_blank" rel="noopener noreferrer">LinkedIn</a></dd></div>
+        </dl>
+
+        <p class="colophon">
+          © <span id="year"></span> Grzegorz Mróz. Typeset in Source Serif 4 and
+          IBM Plex Mono.
+        </p>
+      </footer>
+    </article>
+
+    <script src="script.js?v=7"></script>
+    <script src="3d-graph.js?v=7"></script>
   </body>
 </html>

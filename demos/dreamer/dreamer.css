@@ -1,0 +1,188 @@
+/*
+ * Dreamer demo — the instrument half of the page.
+ *
+ * The two screens are 64x64 canvases scaled up hard, because that is genuinely
+ * the resolution the agent sees: the encoder takes 64x64 frames, so upscaling
+ * with smoothing on would show a sharper world than the model ever had.
+ */
+
+.dreamer-machine {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 22px;
+    margin-top: 44px;
+    align-items: start;
+}
+
+.dreamer-screen-shell {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 20px;
+}
+
+/* ---------- scoreline ---------- */
+.dreamer-scoreline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.dreamer-score-side {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.dreamer-score-side-right {
+    flex-direction: row-reverse;
+}
+
+.dreamer-swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+/* Sampled from the Atari 2600 frames the agent actually played. */
+.dreamer-swatch-agent {
+    background: #5cba5c;
+}
+
+.dreamer-swatch-rival {
+    background: #d5824a;
+}
+
+.dreamer-score-num {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0;
+    line-height: 1;
+}
+
+/* ---------- the match screen ---------- */
+.dreamer-screen {
+    position: relative;
+    aspect-ratio: 1;
+    background: #1a1005;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+}
+
+.dreamer-screen canvas,
+.dreamer-dream-screen canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* The agent sees 64x64. Smoothing it would flatter the model. */
+    image-rendering: pixelated;
+}
+
+.dreamer-flash {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(92, 186, 92, 0.55), transparent 68%);
+}
+
+.dreamer-flash.is-on {
+    animation: dreamer-flash 620ms ease-out;
+}
+
+@keyframes dreamer-flash {
+    0% {
+        opacity: 0.95;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.dreamer-loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: var(--bg-elevated);
+    transition: opacity 0.4s ease;
+}
+
+.dreamer-loading.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ---------- progress ---------- */
+.dreamer-track {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 100px;
+    overflow: hidden;
+    margin: 14px 0;
+}
+
+.dreamer-track i {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: var(--accent-gradient);
+    border-radius: 100px;
+}
+
+/* ---------- imagination panel ---------- */
+.dreamer-side {
+    display: grid;
+    gap: 16px;
+}
+
+.dreamer-dream-screen {
+    position: relative;
+    aspect-ratio: 1;
+    background: #1a1005;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    border: 1px solid transparent;
+    transition: border-color 0.35s ease, opacity 0.35s ease;
+}
+
+.dreamer-dream-screen.is-idle {
+    opacity: 0.28;
+    border-color: transparent;
+}
+
+.dreamer-dream-screen:not(.is-idle) {
+    border-color: rgba(var(--accent-rgb), 0.45);
+    box-shadow: 0 0 26px rgba(var(--accent-rgb), 0.18);
+}
+
+.dreamer-dream-text {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+}
+
+/* ---------- mobile ---------- */
+@media (max-width: 860px) {
+    .dreamer-machine {
+        grid-template-columns: 1fr;
+    }
+
+    .dreamer-side {
+        grid-template-columns: 1fr;
+    }
+}

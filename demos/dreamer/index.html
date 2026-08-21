@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Live demo of dreamer-rssm — a DreamerV2/V3-style world-model agent that learned Atari Pong by training inside its own imagination. Real recorded frames and real decoded model predictions."
+    />
+    <title>The agent that learned to play inside its own head | Grzegorz Mróz</title>
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌀</text></svg>"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <link rel="stylesheet" href="../demo.css?v=7" />
+    <link rel="stylesheet" href="dreamer.css?v=7" />
+  </head>
+
+  <body class="demo-page">
+    <div class="demo-topbar">
+      <div class="demo-topbar-inner">
+        <a class="demo-back" href="../../index.html#projects">
+          <i class="fas fa-arrow-left"></i> Back to portfolio
+        </a>
+        <span class="demo-topbar-title">dreamer-rssm · live demo</span>
+        <a
+          class="demo-repo"
+          href="https://github.com/Grzmro/dreamer-rssm"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-github"></i> Source
+        </a>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <header class="demo-prose">
+        <p class="demo-eyebrow">Reinforcement learning · world models · Atari Pong</p>
+        <h1>The agent that learned to play inside its own head</h1>
+        <p class="demo-lede">
+          This program started out knowing nothing — not what a ball is, not that it was
+          losing. After roughly two hours of training it beats the Atari bot. The interesting
+          part is <em>how</em> it learned: mostly by imagining the game rather than playing it.
+        </p>
+      </header>
+
+      <!-- ============ THE MATCH ============ -->
+      <section class="dreamer-machine">
+        <div class="dreamer-screen-shell">
+          <div class="dreamer-scoreline">
+            <div class="dreamer-score-side">
+              <span class="dreamer-swatch dreamer-swatch-agent"></span>
+              <span>agent</span>
+              <span class="dreamer-score-num" id="scoreA">0</span>
+            </div>
+            <div class="dreamer-score-side dreamer-score-side-right">
+              <span class="dreamer-score-num" id="scoreB">0</span>
+              <span>Atari bot</span>
+              <span class="dreamer-swatch dreamer-swatch-rival"></span>
+            </div>
+          </div>
+
+          <div class="dreamer-screen">
+            <canvas id="stage" width="64" height="64" aria-label="Recorded Pong match"></canvas>
+            <div class="dreamer-flash" id="flash"></div>
+            <div class="dreamer-loading" id="loading">loading the recorded match…</div>
+          </div>
+
+          <div class="dreamer-track"><i id="progress"></i></div>
+
+          <div class="demo-controls">
+            <button class="demo-btn" id="mode1" aria-pressed="true">With imagination</button>
+            <button class="demo-btn" id="mode2" aria-pressed="false">Match only</button>
+            <span class="demo-spacer"></span>
+            <button class="demo-btn" id="play">Pause</button>
+            <button class="demo-btn" id="restart">Restart</button>
+          </div>
+        </div>
+
+        <div class="dreamer-side">
+          <div class="demo-panel">
+            <div class="demo-panel-head">
+              <h3>The agent's imagination</h3>
+              <span class="demo-badge" id="dreamBadge">idle</span>
+            </div>
+            <div class="dreamer-dream-screen is-idle" id="dreamShell">
+              <canvas id="dream" width="64" height="64" aria-label="Decoded model prediction"></canvas>
+            </div>
+            <p class="dreamer-dream-text" id="dreamText">
+              Every few seconds the match freezes and the agent unrolls 15 steps ahead. The
+              picture beside it is its actual prediction, not an animation.
+            </p>
+          </div>
+
+          <div class="demo-panel">
+            <dl class="demo-readout">
+              <dt>move</dt>
+              <dd id="rMove">—</dd>
+              <dt>step</dt>
+              <dd id="rStep">0</dd>
+              <dt>training</dt>
+              <dd>60,000 moves</dd>
+              <dt>hardware</dt>
+              <dd>1 × GTX 1660 Ti</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ WHY IMAGINATION ============ -->
+      <section class="demo-section demo-prose">
+        <h2>Why imagine instead of play</h2>
+        <p>
+          A typical game-learning program has to play the game millions of times. Every attempt
+          costs real time: in robotics it is worn hardware, in medicine or finance a bill nobody
+          wants to pay just so an algorithm can warm up.
+        </p>
+        <p>
+          This agent does something else. First it builds an <strong>internal model of the
+          game</strong> — it learns to predict what the next frame looks like after a given move.
+          Once that model works, the agent no longer needs the real game to practise tactics: it
+          plays thousands of imagined rounds in its head and learns what pays off from those.
+        </p>
+        <div class="demo-cards">
+          <div class="demo-card">
+            <h3>1 · Looks</h3>
+            <p>
+              Watches the screen and squeezes it into a handful of numbers describing the
+              situation: where the ball is, where the paddles are, where it is all heading.
+            </p>
+          </div>
+          <div class="demo-card">
+            <h3>2 · Predicts</h3>
+            <p>
+              From that summary it predicts the next situation after any move — without
+              consulting the real game at all.
+            </p>
+          </div>
+          <div class="demo-card">
+            <h3>3 · Practises in its head</h3>
+            <p>
+              Plays imagined rounds and learns tactics from them. The real game is left doing
+              one job: gathering fresh experience.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DOES IT WORK ============ -->
+      <section class="demo-section">
+        <div class="demo-prose">
+          <h2>Does it actually work better</h2>
+          <p>
+            Compared against two standard methods — <strong>PPO</strong> and <strong>DQN</strong>.
+            All three got the same amount of practice and played exactly the same Pong. A score of
+            <code>−21</code> means losing without scoring once; <code>0</code> is a draw.
+          </p>
+        </div>
+
+        <div class="demo-figures">
+          <figure class="demo-figure">
+            <h3>Score after the same amount of practice</h3>
+            <svg
+              viewBox="0 0 420 214"
+              role="img"
+              aria-label="Match score: Dreamer −1.7; PPO −20.2; DQN −20.8. Zero means a draw."
+            >
+              <line class="rule-zero" x1="392" y1="14" x2="392" y2="172"></line>
+              <line class="rule" x1="24" y1="172" x2="392" y2="172"></line>
+              <text class="axis-note" x="392" y="190" text-anchor="end">0 · draw</text>
+              <text class="axis-note" x="24" y="190" text-anchor="start">−21 · shut out</text>
+
+              <g>
+                <title>Dreamer, this project: −1.7</title>
+                <text class="bar-label" x="24" y="24">Dreamer · this project</text>
+                <rect x="362" y="32" width="30" height="22" rx="4" fill="#7fbfb0"></rect>
+                <text class="bar-value" x="354" y="48" text-anchor="end">−1.7</text>
+              </g>
+              <g>
+                <title>PPO: −20.2</title>
+                <text class="bar-label" x="24" y="78">PPO</text>
+                <rect x="38" y="86" width="354" height="22" rx="4" fill="#3c4a5e"></rect>
+                <text class="bar-value" x="384" y="102" text-anchor="end">−20.2</text>
+              </g>
+              <g>
+                <title>DQN: −20.8</title>
+                <text class="bar-label" x="24" y="132">DQN</text>
+                <rect x="28" y="140" width="364" height="22" rx="4" fill="#3c4a5e"></rect>
+                <text class="bar-value" x="384" y="156" text-anchor="end">−20.8</text>
+              </g>
+            </svg>
+            <figcaption>
+              After ~100k moves PPO and DQN are still being shut out — that much practice is not
+              enough for them. The world-model agent is already close to a draw.
+            </figcaption>
+          </figure>
+
+          <figure class="demo-figure">
+            <h3>How long the computer had to think</h3>
+            <svg
+              viewBox="0 0 420 214"
+              role="img"
+              aria-label="Compute time on the same GPU: PPO 2.5 minutes; DQN 9.2 minutes; Dreamer 346 minutes."
+            >
+              <line class="rule" x1="86" y1="172" x2="410" y2="172"></line>
+              <text class="axis-note" x="86" y="190" text-anchor="start">0</text>
+              <text class="axis-note" x="410" y="190" text-anchor="end">346 min</text>
+
+              <g>
+                <title>PPO: 2.5 minutes</title>
+                <text class="bar-label" x="24" y="24">PPO</text>
+                <rect x="86" y="32" width="3" height="22" rx="1.5" fill="#3c4a5e"></rect>
+                <text class="bar-value" x="97" y="48">2.5 min</text>
+              </g>
+              <g>
+                <title>DQN: 9.2 minutes</title>
+                <text class="bar-label" x="24" y="78">DQN</text>
+                <rect x="86" y="86" width="9" height="22" rx="2" fill="#3c4a5e"></rect>
+                <text class="bar-value" x="103" y="102">9.2 min</text>
+              </g>
+              <g>
+                <title>Dreamer: 346 minutes</title>
+                <text class="bar-label" x="24" y="132">Dreamer · this project</text>
+                <rect x="86" y="140" width="324" height="22" rx="4" fill="#7fbfb0"></rect>
+                <text class="bar-value" x="400" y="156" text-anchor="end">346 min</text>
+              </g>
+            </svg>
+            <figcaption>
+              The other side of the coin, shown on purpose: thinking in imagination is expensive.
+              The same graphics card ran ~140× longer than it did for PPO.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="demo-prose demo-section-tight">
+          <p>
+            That is the whole thesis of the project in two pictures. A world model
+            <strong>buys sample efficiency with compute</strong>. It pays off anywhere a real
+            attempt costs more than electricity — and electricity you can just buy more of.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ NOT A FLUKE ============ -->
+      <section class="demo-section demo-prose">
+        <h2>Evidence it is not a fluke</h2>
+        <p>
+          The strongest evidence is not in the charts above but in an experiment that tests the
+          <em>cause</em>. If the agent really learns from imagined rounds, then playing more of
+          them at the same number of real moves should make it play better. The knob that controls
+          exactly that was set to three positions, three random seeds each, on an A100 cluster:
+        </p>
+        <div class="demo-stat-row">
+          <div class="demo-stat">
+            <b style="color: var(--text-muted)">−20.5</b><span>little imagination</span>
+          </div>
+          <div class="demo-stat">
+            <b style="color: var(--accent-secondary)">−11.9</b><span>medium</span>
+          </div>
+          <div class="demo-stat"><b style="color: #7fbfb0">−6.1</b><span>lots of imagination</span></div>
+        </div>
+        <p>
+          At the lowest setting the agent learned nothing at all — all three seeds stayed at the
+          level of flailing the paddle at random. The more imagined rounds, the better the score,
+          even though the amount of real play was identical. That is what separates "learns from
+          imagination" from "learns from something else, and imagination is decoration".
+        </p>
+      </section>
+
+      <!-- ============ CAVEATS ============ -->
+      <section class="demo-fine">
+        <h3>What this demo does not tell you</h3>
+        <ul>
+          <li>
+            The match shown is <strong>1 win out of 9 recorded attempts</strong>. The agent plays
+            the Atari bot roughly as an equal and loses more often than it wins — I picked a
+            winning match because it is better to watch, but the result is not typical. The eight
+            other attempts ended 4:5 four times, 3:5 twice, then 2:5 and 1:5.
+          </li>
+          <li>
+            The imagination shown in "With imagination" mode is <strong>real</strong> — it is the
+            model's decoded prediction from that moment of the game. But the agent does not
+            actually stop like this while playing: imagination was what it <em>learned</em> from;
+            during a match it acts on reflex.
+          </li>
+          <li>
+            The comparison against PPO and DQN rests on <strong>a single run of each</strong> —
+            too little for a strong conclusion, which is why the 3-seed repetition is the one that
+            runs on the cluster. The "imagination knob" experiment already has 3 seeds per setting.
+          </li>
+          <li>
+            The agent in the chart started from a finished world model and used ~110k moves in
+            total against 100k for PPO and DQN. The version learning entirely from scratch reaches
+            −11.9.
+          </li>
+        </ul>
+        <p>
+          All the code, experiment configs and the full write-up of the results — including what
+          has not been measured yet — are in the project repository.
+        </p>
+      </section>
+    </div>
+
+    <script src="dreamer-demo.js?v=7"></script>
+  </body>
+</html>

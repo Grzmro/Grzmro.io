@@ -1,0 +1,489 @@
+/*
+ * Shared chrome for the live demo pages.
+ *
+ * Both pages link ../styles.css first, so the design tokens, reset, fonts and
+ * scrollbar come from the portfolio itself rather than being restated here —
+ * one place to change the palette, no drift between the site and its demos.
+ * Everything below is demo-specific: the page shell, the instrument panels and
+ * the caveat block each demo ends on.
+ */
+
+/* ==============================
+   PAGE SHELL
+   ============================== */
+.demo-page {
+    background:
+        radial-gradient(1100px 620px at 12% -8%, rgba(var(--accent2-rgb), 0.10), transparent 60%),
+        radial-gradient(900px 520px at 92% 4%, rgba(var(--accent-rgb), 0.08), transparent 62%),
+        var(--bg-primary);
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.demo-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.demo-topbar-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.demo-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.demo-back:hover {
+    color: var(--accent-primary);
+}
+
+.demo-topbar-title {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin-left: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.demo-repo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 15px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.demo-repo:hover {
+    border-color: var(--border-hover);
+    color: var(--text-accent);
+}
+
+.demo-wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 24px 120px;
+}
+
+/* ==============================
+   TYPOGRAPHY
+   ============================== */
+.demo-prose {
+    max-width: 68ch;
+}
+
+.demo-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent-secondary);
+    margin-bottom: 18px;
+}
+
+.demo-wrap h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.4vw, 3.1rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 22px;
+}
+
+.demo-wrap h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+}
+
+.demo-wrap h3 {
+    font-family: var(--font-heading);
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.demo-lede {
+    font-size: 1.13rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+}
+
+.demo-wrap p {
+    color: var(--text-secondary);
+}
+
+.demo-prose p + p {
+    margin-top: 16px;
+}
+
+.demo-wrap strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.demo-wrap em {
+    color: var(--text-accent);
+    font-style: italic;
+}
+
+.demo-wrap code {
+    font-family: var(--font-mono);
+    font-size: 0.87em;
+    color: var(--text-accent);
+    background: rgba(var(--accent-rgb), 0.08);
+    border: 1px solid rgba(var(--accent-rgb), 0.14);
+    border-radius: 5px;
+    padding: 1px 6px;
+}
+
+.demo-section {
+    margin-top: 84px;
+}
+
+.demo-section-tight {
+    margin-top: 52px;
+}
+
+/* ==============================
+   PANELS
+   ============================== */
+.demo-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 22px;
+}
+
+.demo-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.demo-panel-head h3 {
+    margin-bottom: 0;
+}
+
+.demo-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.demo-badge.is-live {
+    border-color: rgba(var(--accent-rgb), 0.4);
+    background: rgba(var(--accent-rgb), 0.1);
+    color: var(--text-accent);
+}
+
+.demo-badge.is-good {
+    border-color: rgba(127, 191, 176, 0.4);
+    background: rgba(127, 191, 176, 0.1);
+    color: #9ad4c6;
+}
+
+.demo-badge.is-warn {
+    border-color: rgba(214, 138, 106, 0.4);
+    background: rgba(214, 138, 106, 0.1);
+    color: #e0a184;
+}
+
+/* ==============================
+   CONTROLS
+   ============================== */
+.demo-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.demo-btn {
+    font-family: var(--font-body);
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 100px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.demo-btn:hover:not(:disabled) {
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+.demo-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.demo-btn[aria-pressed='true'] {
+    background: rgba(var(--accent-rgb), 0.12);
+    border-color: rgba(var(--accent-rgb), 0.4);
+    color: var(--text-accent);
+}
+
+.demo-btn-primary {
+    background: var(--accent-gradient);
+    border-color: transparent;
+    color: #0a0d12;
+    font-weight: 600;
+}
+
+.demo-btn-primary:hover:not(:disabled) {
+    color: #0a0d12;
+    box-shadow: 0 6px 22px rgba(var(--accent-rgb), 0.28);
+}
+
+.demo-spacer {
+    flex: 1;
+}
+
+/* ==============================
+   READOUTS
+   ============================== */
+.demo-readout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 9px 16px;
+    font-size: 0.86rem;
+}
+
+.demo-readout dt {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--text-muted);
+    align-self: center;
+}
+
+.demo-readout dd {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.demo-stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin: 26px 0;
+}
+
+.demo-stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius-sm);
+    padding: 18px;
+    text-align: center;
+}
+
+.demo-stat b {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.85rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.demo-stat span {
+    font-size: 0.79rem;
+    color: var(--text-muted);
+}
+
+/* ==============================
+   CARDS
+   ============================== */
+.demo-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 16px;
+    margin-top: 26px;
+}
+
+.demo-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius-sm);
+    padding: 20px;
+}
+
+.demo-card h3 {
+    color: var(--text-accent);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+}
+
+.demo-card p {
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ==============================
+   FIGURES
+   ============================== */
+.demo-figures {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 22px;
+    margin-top: 30px;
+}
+
+.demo-figure {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--border-radius);
+    padding: 22px;
+}
+
+.demo-figure svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 6px 0 10px;
+}
+
+.demo-figure figcaption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+}
+
+.demo-figure .bar-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--text-secondary);
+}
+
+.demo-figure .bar-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    fill: var(--text-primary);
+}
+
+.demo-figure .axis-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-muted);
+}
+
+.demo-figure .rule {
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 1;
+}
+
+.demo-figure .rule-zero {
+    stroke: rgba(var(--accent-rgb), 0.35);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+}
+
+/* ==============================
+   CAVEATS
+   ============================== */
+.demo-fine {
+    margin-top: 84px;
+    padding: 28px;
+    border: 1px solid var(--border-subtle);
+    border-left: 2px solid rgba(var(--accent-rgb), 0.4);
+    border-radius: var(--border-radius-sm);
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.demo-fine h3 {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-accent);
+    margin-bottom: 16px;
+}
+
+.demo-fine ul {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+}
+
+.demo-fine li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.demo-fine li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+}
+
+.demo-fine p {
+    margin-top: 16px;
+    font-size: 0.9rem;
+}
+
+/* ==============================
+   MOBILE
+   ============================== */
+@media (max-width: 720px) {
+    .demo-wrap {
+        padding: 36px 18px 80px;
+    }
+
+    .demo-topbar-title {
+        display: none;
+    }
+
+    .demo-section {
+        margin-top: 60px;
+    }
+}

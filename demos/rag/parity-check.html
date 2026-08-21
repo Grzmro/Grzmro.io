@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Encoder parity check | RAG demo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../styles.css?v=6" />
+    <link rel="stylesheet" href="../demo.css?v=6" />
+  </head>
+
+  <body class="demo-page">
+    <div class="demo-wrap">
+      <div class="demo-prose">
+        <p class="demo-eyebrow">Measurement · not part of the demo</p>
+        <h1>Encoder parity check</h1>
+        <p class="demo-lede">
+          The demo page can embed a free-text question in the browser, which only means anything
+          if the browser's copy of the encoder agrees with the one the pipeline uses. This page
+          measures that agreement instead of assuming it — it is where the numbers quoted in the
+          demo's caveats come from.
+        </p>
+        <p>
+          For each of the 35 curated questions it embeds the text with
+          <code>Xenova/bge-small-en-v1.5</code> under ONNX, compares the vector against the one
+          <code>fastembed</code> produced for the same question during export, and — the part that
+          actually matters — checks whether the resulting ranking is the same one the Python
+          retriever produced. Both quantisations are measured, since the 8-bit weights are the
+          ones small enough to ship.
+        </p>
+      </div>
+
+      <div class="demo-panel" style="margin-top: 32px">
+        <pre id="out" style="font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.9; color: var(--text-secondary); white-space: pre-wrap">starting…</pre>
+      </div>
+    </div>
+
+    <script src="rag-engine.js?v=6"></script>
+    <script type="module">
+      const out = document.getElementById('out');
+      const log = (line) => {
+        out.textContent += '\n' + line;
+      };
+
+      const cos = (a, b) => {
+        let dot = 0, na = 0, nb = 0;
+        for (let i = 0; i < a.length; i++) {
+          dot += a[i] * b[i];
+          na += a[i] * a[i];
+          nb += b[i] * b[i];
+        }
+        return dot / Math.sqrt(na * nb);
+      };
+
+      try {
+        const { pipeline, env } = await import(
+          'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.5'
+        );
+        env.allowLocalModels = false;
+        out.textContent = 'runtime loaded';
+
+        const [questions, corpus, golden] = await Promise.all(
+          ['questions.json', 'corpus.json', 'golden.json'].map((name) =>
+            fetch('data/' + name).then((r) => r.json())
+          )
+        );
+        const retriever = new RagEngine.Retriever(corpus);
+        log(`query prefix applied by the service: ${JSON.stringify(corpus.query_prefix)}`);
+
+        for (const dtype of ['q8', 'fp32']) {
+          log(`\nloading ${dtype}…`);
+          const extractor = await pipeline('feature-extraction', 'Xenova/bge-small-en-v1.5', {
+            dtype,
+          });
+
+          const sims = [];
+          let rankOne = 0, topFiveOrder = 0, topFiveSet = 0;
+
+          for (const q of questions) {
+            // CLS pooling, matching how fastembed encodes this checkpoint. Mean
+            // pooling scores ~0.95 against the same vectors and is simply wrong.
+            const output = await extractor(corpus.query_prefix + q.question, {
+              pooling: 'cls',
+              normalize: true,
+            });
+            const vec = Array.from(output.data);
+            sims.push(cos(vec, q.vec));
+
+            const want = golden[q.id].dense.map((h) => h.chunk_id);
+            const got = retriever.search(q.question, vec, { mode: 'dense' }).map((h) => h.chunkId);
+            if (want[0] === got[0]) rankOne++;
+            if (want.join('|') === got.join('|')) topFiveOrder++;
+            if ([...want].sort().join('|') === [...got].sort().join('|')) topFiveSet++;
+          }
+
+          const n = questions.length;
+          const mean = sims.reduce((a, b) => a + b, 0) / n;
+          log(
+            `  cosine vs fastembed   mean ${mean.toFixed(5)}  min ${Math.min(...sims).toFixed(5)}\n` +
+            `  same top passage      ${rankOne}/${n}\n` +
+            `  same top-5 order      ${topFiveOrder}/${n}\n` +
+            `  same top-5 set        ${topFiveSet}/${n}`
+          );
+        }
+        log('\ndone');
+      } catch (err) {
+        log('FAILED: ' + err);
+        console.error(err);
+      }
+    </script>
+  </body>
+</html>

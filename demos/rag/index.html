@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Live demo of a grounded RAG pipeline — dense and hybrid retrieval reproduced in the browser over the project's real vectors, with Claude's recorded answers, citations and groundedness scores."
+    />
+    <title>Retrieval you can watch happen | Grzegorz Mróz</title>
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <link rel="stylesheet" href="../demo.css?v=7" />
+    <link rel="stylesheet" href="rag.css?v=7" />
+  </head>
+
+  <body class="demo-page">
+    <div class="demo-topbar">
+      <div class="demo-topbar-inner">
+        <a class="demo-back" href="../../index.html#projects">
+          <i class="fas fa-arrow-left"></i> Back to portfolio
+        </a>
+        <span class="demo-topbar-title">RAG Document Assistant · live demo</span>
+        <a
+          class="demo-repo"
+          href="https://github.com/Grzmro/RAG"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-github"></i> Source
+        </a>
+      </div>
+    </div>
+
+    <div class="demo-wrap">
+      <header class="demo-prose">
+        <p class="demo-eyebrow">Retrieval-augmented generation · groundedness · citations</p>
+        <h1>Retrieval you can watch happen</h1>
+        <p class="demo-lede">
+          The interesting part of a RAG system is not that a model answers — it is
+          <em>which passages it was allowed to answer from</em>, and whether anything it said
+          can be traced back to them. So this page runs the retrieval stage in front of you and
+          shows every number it produced.
+        </p>
+      </header>
+
+      <div class="rag-provenance">
+        <div class="rag-prov">
+          <i class="fas fa-bolt"></i>
+          <div>
+            <b>Retrieval runs live</b>
+            <span
+              >Dense search, BM25 and rank fusion, ported from the project and running in this
+              tab over the same vectors Chroma holds.</span
+            >
+          </div>
+        </div>
+        <div class="rag-prov">
+          <i class="fas fa-circle-check"></i>
+          <div>
+            <b>Verified against the service</b>
+            <span
+              >All 35 questions in both modes, 350 ranked passages, reproduced exactly — the
+              check is a script in the repo, not a claim.</span
+            >
+          </div>
+        </div>
+        <div class="rag-prov">
+          <i class="fas fa-box-archive"></i>
+          <div>
+            <b>Answers are recordings</b>
+            <span
+              >Generation needs an API key, which cannot live in a static page. Claude's answers
+              come from real evaluation runs, judge scores included.</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ CONTROLS ============ -->
+      <section class="rag-controls">
+        <div class="rag-field">
+          <label class="rag-label" for="questionSelect">Question</label>
+          <select class="rag-select" id="questionSelect"></select>
+          <p class="rag-model-status" id="questionNote"></p>
+        </div>
+
+        <div class="rag-field">
+          <span class="rag-label">Retrieval mode</span>
+          <div class="rag-mode-row">
+            <button class="demo-btn" id="modeDense" aria-pressed="true">Dense</button>
+            <button class="demo-btn" id="modeHybrid" aria-pressed="false">Hybrid · BM25 + RRF</button>
+            <span class="rag-mode-note" id="modeNote"></span>
+          </div>
+        </div>
+
+        <div class="rag-field">
+          <label class="rag-label" for="freeInput">Ask your own question</label>
+          <div class="rag-freetext">
+            <input
+              class="rag-input"
+              id="freeInput"
+              type="text"
+              placeholder="Load the embedding model to search with your own wording…"
+              disabled
+            />
+            <button class="demo-btn demo-btn-primary" id="loadModel">
+              <i class="fas fa-download"></i> Load model (~33 MB)
+            </button>
+          </div>
+          <p class="rag-model-status" id="modelStatus">
+            Free text needs the query encoder itself — the same bge-small-en-v1.5 checkpoint the
+            pipeline uses, 8-bit quantised, running on ONNX in this tab. Nothing is sent anywhere.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ STAGE 1: RETRIEVAL ============ -->
+      <section class="rag-stage">
+        <div class="rag-stage-head">
+          <span class="rag-stage-num">STAGE 1</span>
+          <h3>Retrieved passages</h3>
+          <span class="rag-stage-src is-browser">running here</span>
+        </div>
+        <div class="rag-passages" id="passages"></div>
+      </section>
+
+      <!-- ============ STAGE 2: CONTEXT ============ -->
+      <section class="rag-stage">
+        <div class="rag-stage-head">
+          <span class="rag-stage-num">STAGE 2</span>
+          <h3>The context block the model receives</h3>
+          <span class="rag-stage-src is-browser">running here</span>
+        </div>
+        <details class="rag-context" id="contextBlock">
+          <summary>Show the exact numbered block sent to Claude</summary>
+          <pre id="contextText"></pre>
+        </details>
+      </section>
+
+      <!-- ============ STAGE 3: ANSWER ============ -->
+      <section class="rag-stage">
+        <div class="rag-stage-head">
+          <span class="rag-stage-num">STAGE 3</span>
+          <h3>Claude's answer</h3>
+          <span class="rag-stage-src is-recorded" id="answerSrc">recorded</span>
+        </div>
+        <div id="answerSlot"></div>
+      </section>
+
+      <!-- ============ STAGE 4: JUDGE ============ -->
+      <section class="rag-stage">
+        <div class="rag-stage-head">
+          <span class="rag-stage-num">STAGE 4</span>
+          <h3>Groundedness judge</h3>
+          <span class="rag-stage-src is-recorded">recorded</span>
+        </div>
+        <div id="judgeSlot"></div>
+      </section>
+
+      <!-- ============ WHY ABSTENTION ============ -->
+      <section class="demo-section demo-prose">
+        <h2>The failure this is built to prevent</h2>
+        <p>
+          A retrieval system that always answers is easy. The hard requirement is that it
+          <strong>declines</strong> when the corpus does not hold the answer — including when the
+          corpus talks about the topic at length and simply never states the fact being asked for.
+          That is where a language model's general knowledge quietly fills the gap and the answer
+          stops being traceable to anything.
+        </p>
+        <p>
+          Nine of the questions in the picker are unanswerable by construction. The pipeline is
+          expected to return <code>INSUFFICIENT_CONTEXT</code> and an empty citation list rather
+          than a plausible sentence. Twenty more are a discrimination set: same corpus, but each
+          one is built so a dense-only channel can plausibly rank the right passage below the cut.
+        </p>
+        <p>
+          Try <strong>“Who must approve access to Restricted data…”</strong> and switch between the
+          two retrieval modes. Dense search alone misses the passage and the model refuses to
+          answer; adding the lexical channel surfaces it and the same model answers correctly. The
+          generation step never changed — only what it was allowed to read.
+        </p>
+      </section>
+
+      <!-- ============ EVALUATION ============ -->
+      <section class="demo-section">
+        <div class="demo-prose">
+          <h2>What the evaluation runs measured</h2>
+          <p>
+            Every answer above was scored by a second model that decomposes it into atomic claims
+            and marks each one against the retrieved passages only, alongside deterministic checks
+            that need no model at all — retrieval recall, dangling citation markers, required
+            content, and whether abstention happened where it should.
+          </p>
+        </div>
+        <div class="rag-table-wrap">
+          <table class="rag-table" id="runsTable">
+            <caption>
+              Cross-encoder reranking is measured here but not offered above: it needs a model
+              rather than a formula, so the browser cannot reproduce its ordering, and showing
+              passages in an order the recorded answer's citation markers do not match would be
+              worse than leaving it out.
+            </caption>
+          </table>
+        </div>
+      </section>
+
+      <!-- ============ CAVEATS ============ -->
+      <section class="demo-fine">
+        <h3>What this demo does not tell you</h3>
+        <ul>
+          <li>
+            The corpus is <strong>3 documents, 11 chunks</strong> — a deliberately small fixture
+            for testing behaviour, not a demonstration of scale. With <code>top_k = 5</code>,
+            every query retrieves nearly half of it, which is why the regression set scores 100%
+            on every configuration and the discrimination set exists at all.
+          </li>
+          <li>
+            Answers are <strong>recorded, not generated now</strong>. They came from real runs of
+            the pipeline against the Anthropic API, but the wording you see is fixed. A question
+            you type yourself gets retrieval and a context block — never an invented answer.
+          </li>
+          <li>
+            The browser embeds free text with an <strong>8-bit quantised</strong> copy of the
+            encoder. On the 35 curated questions it picks the same top passage every time and the
+            same top-5 set every time, with two of them ordered differently inside that set; the
+            unquantised model reproduces the service exactly.
+          </li>
+          <li>
+            Groundedness is scored by a language model, so it is
+            <strong>evidence, not proof</strong>. The checks that do not need a model — dangling
+            markers, retrieval recall, required content, abstention accuracy — are the ones that
+            cannot flatter the system.
+          </li>
+        </ul>
+        <p>
+          The exporter, the ported retrieval stack and the script that checks the port against the
+          Python service are all in the portfolio repository; the pipeline itself is in the project
+          repository.
+        </p>
+      </section>
+    </div>
+
+    <script src="rag-engine.js?v=7"></script>
+    <script src="rag-demo.js?v=7"></script>
+  </body>
+</html>

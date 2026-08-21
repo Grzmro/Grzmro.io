@@ -1,9 +1,25 @@
 /**
- * 3D Interactive Skills Graph — v2
- * Clean, compact Three.js graph with readable labels
+ * 3D Interactive Skills Graph — v3
+ * Clean, compact Three.js graph with readable labels.
+ *
+ * Rendered as Figure 3 of the page, so it is drawn as ink on paper: the
+ * palette below is chosen for a light stock and swapped for the dark one via
+ * prefers-color-scheme. Every category colour clears 5.5:1 against its
+ * background in both themes.
  */
 
 (function () {
+    const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Reads a design token from the stylesheet so the graph stays in step with
+    // the page instead of carrying a second, drifting copy of the palette.
+    function token(name, fallback) {
+        const v = getComputedStyle(document.documentElement)
+            .getPropertyValue(name)
+            .trim();
+        return v || fallback;
+    }
+
     function waitForThree(cb) {
         if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls !== 'undefined') cb();
         else setTimeout(() => waitForThree(cb), 50);
@@ -21,7 +37,7 @@
         const height = container.clientHeight;
 
         const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-        camera.position.set(0, 0, 26);
+        camera.position.set(0, 0, 30);
 
         const renderer = new THREE.WebGLRenderer({
             canvas: document.getElementById('skills-graph'),
@@ -37,33 +53,46 @@
         controls.dampingFactor = 0.06;
         controls.enableZoom = true;
         controls.enablePan = false;
-        controls.minDistance = 14;
-        controls.maxDistance = 35;
+        controls.minDistance = 8;
+        controls.maxDistance = 40;
         controls.autoRotate = true;
         controls.autoRotateSpeed = 0.5;
 
         // ============ DATA ============
+        // Two plates of the same figure: ink on paper, or chalk on slate.
+        const plate = darkMode
+            ? ['#8fa8ff', '#e58ac4', '#5fc4a8', '#d6a75a', '#a4a9b0']
+            : ['#1b44c8', '#8a2f6b', '#1f6f5c', '#7a4a12', '#4a4f57'];
+
         const categories = [
-            { name: 'ML & AI', color: '#3b82f6', hex: 0x3b82f6, skills: ['Keras', 'scikit-learn', 'TensorFlow', 'Prompt Eng.'] },
-            { name: 'Data Science', color: '#06b6d4', hex: 0x06b6d4, skills: ['Python', 'pandas', 'NumPy', 'SQL', 'R'] },
-            { name: 'Projects', color: '#f59e0b', hex: 0xf59e0b, skills: ['Football Predictor', 'Darwin World'] },
-            { name: 'Mathematics', color: '#a855f7', hex: 0xa855f7, skills: ['Linear Algebra', 'Probability', 'Statistics', 'ODEs/PDEs'] },
-            { name: 'Tools', color: '#22c55e', hex: 0x22c55e, skills: ['Git', 'Jupyter', 'Airflow', 'Jira', 'Linux'] },
-        ];
+            { name: 'GenAI & LLMs', skills: ['Anthropic API', 'LangChain', 'RAG', 'Embeddings', 'Vector DBs', 'Prompt Eng.'] },
+            { name: 'ML & AI', skills: ['PyTorch', 'scikit-learn', 'RL', 'World Models'] },
+            { name: 'Programming', skills: ['Python', 'pandas', 'NumPy', 'SQL', 'Java'] },
+            { name: 'Mathematics', skills: ['Linear Algebra', 'Probability', 'Statistics'] },
+            { name: 'Cloud & Tools', skills: ['AWS', 'Docker', 'FastAPI', 'Git', 'Jupyter'] },
+        ].map((cat, i) => Object.assign(cat, {
+            color: plate[i],
+            hex: parseInt(plate[i].slice(1), 16),
+        }));
 
         // ============ LAYOUT ============
+        // Categories are separated into distinct clusters (small sub-graphs)
         const nodes = [];
         const edges = [];
 
         // Central node
-        const center = { name: 'GM', x: 0, y: 0, z: 0, type: 'center', color: 0x60a5fa, colorStr: '#60a5fa' };
+        const inkStr = darkMode ? '#e8e9e4' : '#14161a';
+        const center = {
+            name: 'GM', x: 0, y: 0, z: 0, type: 'center', cat: null,
+            color: parseInt(inkStr.slice(1), 16), colorStr: inkStr,
+        };
         nodes.push(center);
 
-        const catRadius = 6.5;
+        const catRadius = 8.5;
 
         categories.forEach((cat, i) => {
             const angle = (i / categories.length) * Math.PI * 2 - Math.PI / 2;
-            const zOff = (i % 2 === 0 ? 1.5 : -1.5);
+            const zOff = (i % 2 === 0 ? 1.8 : -1.8);
 
             const catNode = {
                 name: cat.name,
@@ -71,17 +100,19 @@
                 y: Math.sin(angle) * catRadius,
                 z: zOff,
                 type: 'category',
+                cat: cat.name,
                 color: cat.hex,
                 colorStr: cat.color
             };
             nodes.push(catNode);
-            edges.push({ from: center, to: catNode, color: cat.hex, opacity: 0.35 });
+            // Faint tie back to the center — clusters stay visually separate
+            edges.push({ from: center, to: catNode, cat: cat.name, color: cat.hex, opacity: 0.12 });
 
-            const skillR = 3.8;
-            const spread = 0.55;
+            const skillR = 2.9;
+            const spread = 0.85;
             cat.skills.forEach((skill, j) => {
                 const sAngle = angle + (j - (cat.skills.length - 1) / 2) * spread;
-                const jitterZ = (Math.random() - 0.5) * 3.0; // More depth variation
+                const jitterZ = (Math.random() - 0.5) * 2.0;
 
                 const sNode = {
                     name: skill,
@@ -89,23 +120,16 @@
                     y: catNode.y + Math.sin(sAngle) * skillR,
                     z: catNode.z + jitterZ,
                     type: 'skill',
+                    cat: cat.name,
                     color: cat.hex,
                     colorStr: cat.color
                 };
                 nodes.push(sNode);
-                edges.push({ from: catNode, to: sNode, color: cat.hex, opacity: 0.2 });
+                edges.push({ from: catNode, to: sNode, cat: cat.name, color: cat.hex, opacity: 0.25 });
             });
-        });
 
-        // Cross-connections (subtle)
-        const crossPairs = [
-            ['Python', 'scikit-learn'], ['Python', 'pandas'], ['Linear Algebra', 'TensorFlow'],
-            ['Probability', 'Statistics'], ['SQL', 'pandas']
-        ];
-        crossPairs.forEach(([a, b]) => {
-            const nA = nodes.find(n => n.name === a);
-            const nB = nodes.find(n => n.name === b);
-            if (nA && nB) edges.push({ from: nA, to: nB, color: 0x1e293b, opacity: 0.08, cross: true });
+            // Cluster centroid (used for camera focus)
+            cat.centroid = new THREE.Vector3(catNode.x, catNode.y, catNode.z);
         });
 
         // ============ CREATE 3D OBJECTS ============
@@ -186,24 +210,27 @@
             const isCenter = node.type === 'center';
             const isCat = node.type === 'category';
 
+            // Labels are set in the page's mono face and sit on paper-coloured
+            // chips, so they read as printed annotations rather than HUD chrome.
+            const paper = token('--paper', darkMode ? '#16171b' : '#f4f5f3');
+            const rule = token('--rule', darkMode ? '#2c2e34' : '#dcded8');
+            const inkMid = token('--ink-mid', darkMode ? '#a4a9b0' : '#4a4f57');
+
             el.style.cssText = `
                 position:absolute;
-                font-family:'Inter',sans-serif;
-                font-weight:${isCenter ? '800' : isCat ? '700' : '600'};
-                font-size:${isCenter ? '18px' : isCat ? '14px' : '11px'};
-                color:${isCenter ? '#ffffff' : isCat ? node.colorStr : '#cbd5e1'};
-                background:${isCenter ? 'rgba(59,130,246,0.25)' : isCat ? 'rgba(0,0,0,0.7)' : 'rgba(15,23,42,0.8)'};
-                border:1.5px solid ${isCenter ? 'rgba(96,165,250,0.6)' : isCat ? node.colorStr : 'rgba(255,255,255,0.1)'};
-                padding:${isCenter ? '6px 16px' : isCat ? '4px 12px' : '3px 10px'};
-                border-radius:${isCenter ? '10px' : '8px'};
+                font-family:'IBM Plex Mono',ui-monospace,monospace;
+                font-weight:${isCenter ? '600' : '500'};
+                font-size:${isCenter ? '13px' : isCat ? '11.5px' : '10px'};
+                color:${isCenter ? paper : isCat ? node.colorStr : inkMid};
+                background:${isCenter ? node.colorStr : paper};
+                border:1px solid ${isCenter ? node.colorStr : isCat ? node.colorStr : rule};
+                padding:${isCenter ? '4px 12px' : isCat ? '3px 9px' : '2px 7px'};
+                border-radius:3px;
                 white-space:nowrap;
                 transform:translate(-50%,-50%);
                 pointer-events:none;
-                backdrop-filter:blur(6px);
-                letter-spacing:${isCenter ? '1.5px' : '0.5px'};
-                text-shadow:0 1px 4px rgba(0,0,0,0.8);
+                letter-spacing:${isCenter ? '0.12em' : '0.03em'};
                 transition:opacity 0.3s ease;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             `;
 
             labelsOverlay.appendChild(el);
@@ -227,6 +254,11 @@
 
             nodes.forEach(node => {
                 if (!node.mesh || !node.labelEl) return;
+
+                if (node.hidden) {
+                    node.labelEl.style.opacity = '0';
+                    return;
+                }
 
                 tempVec.copy(node.mesh.position);
                 // Offset label above node
@@ -310,6 +342,52 @@
             });
         }
 
+        // ============ CATEGORY FILTER CHIPS ============
+        const desiredTarget = new THREE.Vector3(0, 0, 0);
+        let desiredDist = 30;
+
+        function setFilter(catName) {
+            nodes.forEach(node => {
+                const show = node.type === 'center' || catName === 'All' || node.cat === catName;
+                node.hidden = !show;
+                if (node.mesh) node.mesh.visible = show;
+                if (node.ring) node.ring.visible = show;
+                if (node.glow) node.glow.visible = show;
+            });
+
+            edges.forEach(e => {
+                const show = catName === 'All' || e.cat === catName;
+                if (e.mesh) e.mesh.visible = show;
+            });
+
+            if (catName === 'All') {
+                desiredTarget.set(0, 0, 0);
+                desiredDist = 30;
+            } else {
+                const cat = categories.find(c => c.name === catName);
+                if (cat) {
+                    desiredTarget.copy(cat.centroid);
+                    desiredDist = 12;
+                }
+            }
+        }
+
+        const filtersDiv = document.createElement('div');
+        filtersDiv.className = 'graph-filters';
+        ['All'].concat(categories.map(c => c.name)).forEach((name, i) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = name;
+            if (i === 0) btn.classList.add('active');
+            btn.addEventListener('click', () => {
+                filtersDiv.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                setFilter(name);
+            });
+            filtersDiv.appendChild(btn);
+        });
+        container.appendChild(filtersDiv);
+
         // ============ AMBIENT PARTICLES ============
         const pCount = 40;
         const pGeo = new THREE.BufferGeometry();
@@ -320,7 +398,12 @@
             pPos[i * 3 + 2] = (Math.random() - 0.5) * 35;
         }
         pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-        const pMat = new THREE.PointsMaterial({ color: 0x3b82f6, size: 0.05, transparent: true, opacity: 0.3 });
+        const pMat = new THREE.PointsMaterial({
+            color: darkMode ? 0x7f858d : 0x9aa0a8,
+            size: 0.05,
+            transparent: true,
+            opacity: darkMode ? 0.3 : 0.22,
+        });
         const ambient = new THREE.Points(pGeo, pMat);
         scene.add(ambient);
 
@@ -356,6 +439,15 @@
             });
 
             ambient.rotation.y += 0.0002;
+
+            // Smoothly steer the camera toward the selected cluster
+            controls.target.lerp(desiredTarget, 0.06);
+            const camDir = camera.position.clone().sub(controls.target);
+            const camDist = camDir.length();
+            if (Math.abs(camDist - desiredDist) > 0.05) {
+                camDir.normalize().multiplyScalar(camDist + (desiredDist - camDist) * 0.06);
+                camera.position.copy(controls.target).add(camDir);
+            }
 
             controls.update();
             updateLabels();
